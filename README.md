@@ -1,83 +1,134 @@
-# Gifts, Trophies & Mementos E-commerce Platform
+# AchaarWaala — The Heritage Pickle Store
 
-A comprehensive and secure e-commerce platform specifically designed for selling premium gifts, trophies, and mementos. This project features a robust backend API, a customer-facing storefront, and a powerful administrative dashboard.
-
-## 🚀 Architecture & Tech Stack
-
-### Backend
-- **Core**: Node.js with Express.js
-- **Database**: PostgreSQL with Prisma ORM
-- **Auth**: Stateless PASETO tokens & Google OAuth 2.0
-- **Storage**: Cloudinary (Product images)
-- **Email**: Resend SDK (Transactional emails)
-- **Payments**: Razorpay (Webhooks & COD support)
-- **Security**: Redis-backed rate limiting, Helmet.js, CORS
-
-### Frontend (Store & Admin)
-- **Framework**: React (Vite-based SPA)
-- **Styling**: Tailwind CSS (Luxury brand theme: Mobile-first responsive layouts, glassmorphism, HSL-tailored colors)
-- **State Management**: Zustand (Atomic stores) & Context API
-- **Data Fetching**: TanStack React Query (Caching & Synchronization)
-- **Charts**: Recharts (Administrative analytics)
+A full-stack e-commerce platform for **AchaarWaala**, an artisanal Indian pickle brand. Built with a modern monorepo architecture featuring a customer storefront, admin dashboard, and a secure REST API backend.
 
 ---
 
-## 📂 Project Structure
+## 🌶️ About the Project
 
-```bash
-.
-├── backend/            # Express API, Prisma Schema, Auth & Payments Logic
-├── frontend-store/     # Customer-facing storefront application
-└── frontend-admin/     # Role-based administrative dashboard
+AchaarWaala brings the authentic taste of hand-crafted, traditionally prepared Indian pickles (achaar) directly to customers. The platform is designed to reflect a premium, heritage brand identity.
+
+**Live URLs:**
+- 🛒 Storefront: [achaarwaala.com](https://achaarwaala.com)
+- 🛠️ Admin Panel: [admin.achaarwaala.com](https://admin.achaarwaala.com)
+
+---
+
+## 🏗️ Architecture
+
 ```
+achaarwaala/
+├── backend/            # Express.js REST API + Prisma ORM
+├── frontend-store/     # Customer-facing storefront (Vite + React)
+└── frontend-admin/     # Role-based admin dashboard (Vite + React)
+```
+
+---
+
+## 🚀 Tech Stack
+
+### Backend
+| Layer | Technology |
+|---|---|
+| Runtime | Node.js (v18+) |
+| Framework | Express.js |
+| Database | PostgreSQL + Prisma ORM |
+| Authentication | **Firebase Phone Auth** (OTP-based) + PASETO session tokens |
+| Payments | Razorpay (webhooks + COD) |
+| Image Storage | Cloudinary |
+| Email | SMTP (Gmail / custom) |
+| Cache & Rate Limiting | Redis / Upstash Valkey |
+| Security | Helmet.js, CORS, CSRF protection, Zod validation |
+
+### Frontend (Store & Admin)
+| Layer | Technology |
+|---|---|
+| Framework | React 18 (Vite) |
+| Styling | Vanilla CSS (heritage-inspired design system) |
+| State Management | Zustand |
+| Auth Client | Firebase JS SDK (Phone OTP) |
+| Routing | React Router v6 |
+| HTTP Client | Axios (with auto-refresh interceptors) |
+| Analytics | Meta Pixel |
 
 ---
 
 ## ✨ Key Features
 
-- **Advanced Accounts**: Email/Password login, Google Social Login, Email Verification via SMTP (Resend), and Password Recovery.
-- **Catalog Management**: Hierarchical categories, dynamic product filtering (price, category), and smart sorting.
-- **Order Lifecycle**: Secure checkout, Razorpay integration, automated stock tracking, and webhook validation.
-- **Returns & Refunds**: End-to-end lifecycle management for order returns and automated refund processing.
-- **Analytics & CMS**: Sales reports, revenue breakdowns, and dynamic homepage banner management via Admin Dashboard.
-- **Support System**: Integrated support ticket mechanism for both customers and administrators.
+### Customer Storefront
+- 📱 **Phone OTP Login** — Friction-free Firebase phone authentication (no passwords)
+- 🛒 **Cart & Checkout** — Guest cart that merges on login, full Razorpay integration
+- 📦 **Order Tracking** — Real-time order status updates and history
+- ❤️ **Wishlist** — Save favourite products for later
+- 🔍 **Product Catalog** — Filter by category, price sort, and search
+- 📍 **Address Management** — Save multiple delivery addresses
+
+### Admin Dashboard
+- 📊 **Analytics** — Revenue charts, top products, and sales breakdowns
+- 📋 **Order Management** — View, update, and manage the full order lifecycle
+- 🏷️ **Product CMS** — Create, edit, and manage products with Cloudinary image uploads
+- 👥 **Customer Management** — View customer profiles and order history
+- 🔄 **Returns & Refunds** — End-to-end returns management
+- 🎫 **Support Tickets** — In-app customer support system
 
 ---
 
 ## 🛠️ Setup & Installation
 
-### 1. Prerequisites
-- Node.js (v18+)
-- PostgreSQL
-- Redis (for rate limiting)
-- Cloudinary, Razorpay, and Resend accounts
+### Prerequisites
+- Node.js v18+
+- PostgreSQL database
+- Redis / Upstash Valkey instance
+- Firebase project (with Phone Auth enabled)
+- Cloudinary, Razorpay, and SMTP email accounts
 
-### 2. Backend Setup
+---
+
+### 1. Backend
+
 ```bash
 cd backend
 npm install
 
-# Configure Environment Variables
+# Set up environment variables
 cp .env.example .env
-# Edit .env with your credentials
+# → Fill in all values in .env
 
-# Database Setup
+# Set up the database
 npx prisma generate
 npx prisma db push
-npm run seed        # Optional: Seed initial data
-```
 
-### 3. Frontend Store Setup
-```bash
-cd frontend-store
-npm install
+# (Optional) Seed initial data
+node src/utils/seed.js
+
+# Start development server
 npm run dev
 ```
 
-### 4. Admin Dashboard Setup
+---
+
+### 2. Frontend Store
+
+```bash
+cd frontend-store
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# → Fill in your Firebase config and API URL
+
+# Start development server
+npm run dev
+```
+
+---
+
+### 3. Admin Dashboard
+
 ```bash
 cd frontend-admin
 npm install
+cp .env.example .env
 npm run dev
 ```
 
@@ -85,40 +136,77 @@ npm run dev
 
 ## 🔑 Environment Variables
 
-### Backend
-The backend requires the following configuration in `.env`:
+### Backend (`backend/.env`)
 
 | Variable | Description |
-| :--- | :--- |
+|:---|:---|
 | `DATABASE_URL` | PostgreSQL connection string |
-| `REDIS_URL` | Redis connection string |
-| `PASETO_SECRET_KEY` | 32-byte hex secret for tokens |
-| `GOOGLE_CLIENT_ID` | Google OAuth Client ID |
+| `REDIS_URL` / `VALKEY_URL` | Redis/Valkey for rate limiting & caching |
+| `PASETO_SECRET_KEY` | 32-byte hex secret for session tokens |
+| `FIREBASE_PROJECT_ID` | Firebase project ID (from service account) |
+| `FIREBASE_CLIENT_EMAIL` | Firebase service account email |
+| `FIREBASE_PRIVATE_KEY` | Firebase private key (escape newlines with `\n`) |
 | `RAZORPAY_KEY_ID` | Razorpay Key ID |
-| `CLOUDINARY_API_KEY`| Cloudinary API Key |
-| `RESEND_API_KEY` | Resend API Key |
+| `RAZORPAY_KEY_SECRET` | Razorpay Key Secret |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
+| `SMTP_USER` | Gmail address for transactional emails |
+| `SMTP_PASS` | Gmail App Password |
+| `COOKIE_DOMAIN` | `.achaarwaala.com` (for cross-subdomain sessions) |
 
-*(See `backend/.env.example` for the full list)*
+*See [`backend/.env.example`](./backend/.env.example) for the full reference.*
 
-### Frontend (Store & Admin)
-The frontend requires:
+### Frontend Store (`frontend-store/.env`)
 
 | Variable | Description |
-| :--- | :--- |
-| `VITE_API_BASE_URL` | Backend API base URL (e.g., `http://localhost:5000/api`) |
-| `VITE_GOOGLE_MAPS_API_KEY` | Google Maps API key for address validation |
+|:---|:---|
+| `VITE_API_BASE_URL` | Backend API URL (e.g., `http://localhost:5000/api`) |
+| `VITE_FIREBASE_API_KEY` | Firebase Web App API Key |
+| `VITE_FIREBASE_AUTH_DOMAIN` | Firebase Auth Domain |
+| `VITE_FIREBASE_PROJECT_ID` | Firebase Project ID |
+| `VITE_META_PIXEL_ID` | Meta (Facebook) Pixel ID |
+| `VITE_GOOGLE_MAPS_API_KEY` | Google Maps API Key (address input) |
 
-*(See `frontend-store/.env.example` for the full list)*
+*See [`frontend-store/.env.example`](./frontend-store/.env.example) for the full reference.*
 
 ---
 
-## 🛡️ Security Features
-- **PASETO**: Modern, secure alternative to JWT.
-- **Rate Limiting**: Redis-backed protection against brute force and DDoS.
-- **Secure Headers**: Using Helmet.js for XSS and Clickjacking protection.
-- **Validation**: Schema validation using Zod for all API requests.
+## 🔐 Authentication Flow
+
+AchaarWaala uses a **100% passwordless, phone-first** authentication system:
+
+```
+1. User enters mobile number
+        ↓
+2. Firebase sends OTP via SMS (invisible reCAPTCHA)
+        ↓
+3. User enters OTP → Firebase verifies → returns ID Token
+        ↓
+4. Frontend sends ID Token to backend (/auth/verify-firebase)
+        ↓
+5. Backend verifies token via Firebase Admin SDK
+        ↓
+6. Backend upserts user in PostgreSQL, issues PASETO session cookies
+        ↓
+7. User is logged in ✅
+```
+
+---
+
+## 🛡️ Security
+
+- **HttpOnly Cookies** — Session tokens stored in secure, JS-inaccessible cookies
+- **CSRF Protection** — Double-submit cookie pattern on all state-mutating requests
+- **PASETO Tokens** — Modern, cryptographically secure alternative to JWT
+- **Rate Limiting** — Redis-backed protection against brute force attacks
+- **Helmet.js** — Secure HTTP headers (XSS, Clickjacking protection)
+- **Zod Validation** — Schema validation on all API endpoints
 
 ---
 
 ## 📄 License
-This project is licensed under the ISC License.
+
+This project is licensed under the **ISC License**.
+
+---
+
+*Made with ❤️ for authentic Indian flavours*
