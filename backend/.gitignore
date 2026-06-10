@@ -1,0 +1,71 @@
+# ============================================================
+# BACKEND GITIGNORE — Node.js / Express / Prisma
+# ============================================================
+
+# ── Dependencies ─────────────────────────────────────────────
+node_modules/
+
+# ── Build Output ─────────────────────────────────────────────
+dist/
+build/
+
+# ── Environment Variables ────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Firebase Service Account (SENSITIVE!) ───────────────────
+firebase-adminsdk*.json
+serviceAccountKey.json
+*-firebase-adminsdk-*.json
+
+# ── Database ─────────────────────────────────────────────────
+prisma/dev.db
+prisma/dev.db-journal
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# ── Prisma Generated ─────────────────────────────────────────
+# Keep migrations folder tracked, but ignore generated client if needed
+# prisma/generated/ 
+
+# ── Uploads ──────────────────────────────────────────────────
+uploads/*
+!uploads/.gitkeep
+
+# ── Logs ─────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ── Cache & Temp ─────────────────────────────────────────────
+.cache/
+.temp/
+.tmp/
+*.tmp
+
+# ── Test Coverage ────────────────────────────────────────────
+coverage/
+.nyc_output/
+
+# ── Editor / IDE ─────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*.sw?
+
+# ── OS Specific ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Dev Tools ────────────────────────────────────────────────
+scratch/
+generate-keys.js

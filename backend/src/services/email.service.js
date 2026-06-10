@@ -1,0 +1,230 @@
+import { sendMail } from '../lib/mailer.js';
+import prisma from '../lib/prisma.js';
+
+const BRAND_COLOR = '#4A7C2F';
+const BG_COLOR = '#FAFAF6';
+
+const baseTemplate = (content) => `
+  <div style="font-family: sans-serif; background-color: ${BG_COLOR}; padding: 40px 20px; color: #333; line-height: 1.6;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+      <div style="background-color: ${BRAND_COLOR}; padding: 30px; text-align: center;">
+        <h1 style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 1px;">Achaarwaala</h1>
+      </div>
+      <div style="padding: 40px;">
+        ${content}
+      </div>
+      <div style="padding: 20px; text-align: center; border-top: 1px solid #eeeeee; font-size: 12px; color: #999;">
+        <p>&copy; ${new Date().getFullYear()} Achaarwaala. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+`;
+
+export const emailService = {
+  async sendOrderConfirmation({ to, userName, orderId, items, total, deliveryDate }) {
+    const gst = (total * 0.05).toFixed(2);
+    const subtotal = (total - gst).toFixed(2);
+
+    const itemsHtml = items.map(item => `
+      <tr>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eeeeee;">${item.name} x ${item.qty}</td>
+        <td style="padding: 10px 0; border-bottom: 1px solid #eeeeee; text-align: right;">₹${item.price}</td>
+      </tr>
+    `).join('');
+
+    const content = `
+      <h2 style="color: ${BRAND_COLOR}; margin-bottom: 20px;">Order Confirmed!</h2>
+      <p>Hello <strong>${userName}</strong>,</p>
+      <p>Your order <strong>#${orderId}</strong> has been successfully placed. We are preparing it for dispatch.</p>
+      
+      <table style="width: 100%; border-collapse: collapse; margin: 30px 0;">
+        <thead>
+          <tr>
+            <th style="text-align: left; padding-bottom: 10px; border-bottom: 2px solid #eeeeee;">Item</th>
+            <th style="text-align: right; padding-bottom: 10px; border-bottom: 2px solid #eeeeee;">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsHtml}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td style="padding-top: 20px; font-weight: bold;">Subtotal</td>
+            <td style="padding-top: 20px; text-align: right; font-weight: bold;">₹${subtotal}</td>
+          </tr>
+          <tr>
+            <td style="padding-top: 5px; color: #666; font-size: 14px;">GST (5%)</td>
+            <td style="padding-top: 5px; text-align: right; color: #666; font-size: 14px;">₹${gst}</td>
+          </tr>
+          <tr>
+            <td style="padding-top: 10px; font-size: 18px; font-weight: bold; color: ${BRAND_COLOR};">Total</td>
+            <td style="padding-top: 10px; text-align: right; font-size: 18px; font-weight: bold; color: ${BRAND_COLOR};">₹${total}</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div style="background-color: ${BG_COLOR}; padding: 15px; border-radius: 8px; text-align: center; margin-top: 30px;">
+        <p style="margin: 0; font-size: 14px; color: #555;">Estimated Delivery: <strong>${deliveryDate}</strong></p>
+      </div>
+    `;
+
+    return sendMail({
+      to,
+      subject: `Order Confirmed – #${orderId} | Achaarwaala`,
+      html: baseTemplate(content),
+    });
+  },
+
+  async sendOtpEmail({ to, userName, otp }) {
+    const content = `
+      <h2 style="color: ${BRAND_COLOR}; margin-bottom: 20px;">Security Verification</h2>
+      <p>Hello <strong>${userName}</strong>,</p>
+      <p>Your one-time password (OTP) is:</p>
+      <div style="font-size: 36px; font-weight: bold; letter-spacing: 5px; color: ${BRAND_COLOR}; text-align: center; margin: 40px 0; background-color: ${BG_COLOR}; padding: 20px; border-radius: 12px;">
+        ${otp}
+      </div>
+      <p style="color: #666; font-size: 14px; text-align: center;">This OTP is valid for 5 minutes. For security reasons, never share this code with anyone.</p>
+    `;
+
+    return sendMail({
+      to,
+      subject: "Your OTP – Achaarwaala",
+      html: baseTemplate(content),
+    });
+  },
+
+  async sendPasswordResetEmail({ to, userName, resetLink }) {
+    const content = `
+      <h2 style="color: ${BRAND_COLOR}; margin-bottom: 20px;">Reset Your Password</h2>
+      <p>Hello <strong>${userName}</strong>,</p>
+      <p>We received a request to reset your password. Click the button below to proceed:</p>
+      <div style="text-align: center; margin: 40px 0;">
+        <a href="${resetLink}" style="background-color: ${BRAND_COLOR}; color: #ffffff; padding: 16px 32px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 8px rgba(74, 124, 47, 0.2);">
+          Reset Password
+        </a>
+      </div>
+      <p style="color: #666; font-size: 14px;">This link will expire in 30 minutes. If you didn't request this, you can safely ignore this email.</p>
+    `;
+
+    return sendMail({
+      to,
+      subject: "Reset Your Password – Achaarwaala",
+      html: baseTemplate(content),
+    });
+  },
+
+  async sendWelcomeEmail({ to, userName }) {
+    const content = `
+      <h2 style="color: ${BRAND_COLOR}; margin-bottom: 20px;">Welcome to the Family!</h2>
+      <p>Hello <strong>${userName}</strong>,</p>
+      <p>We're thrilled to have you at <strong>Achaarwaala</strong>. Discover our premium collection of authentic handcrafted Indian pickles (achaar) straight from the village of Lohagaal, Jhunjhunu, Rajasthan.</p>
+      <p>Let's savor some authentic taste together!</p>
+      <div style="text-align: center; margin: 40px 0;">
+        <a href="${process.env.CLIENT_URL || '#'}" style="background-color: ${BRAND_COLOR}; color: #ffffff; padding: 16px 32px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 16px; display: inline-block;">
+          Start Shopping
+        </a>
+      </div>
+    `;
+
+    return sendMail({
+      to,
+      subject: "Welcome to Achaarwaala!",
+      html: baseTemplate(content),
+    });
+  },
+
+  async sendAdminTransactionNotification({ order, user, transactionType = 'ORDER_CREATED' }) {
+    const adminEmail = process.env.ADMIN_EMAIL || 'contact@achaarwaala.com';
+    
+    let fullOrder = order;
+    try {
+      const dbOrder = await prisma.order.findUnique({
+        where: { id: order.id },
+        include: {
+          items: true,
+          address: true
+        }
+      });
+      if (dbOrder) {
+        fullOrder = dbOrder;
+      }
+    } catch (err) {
+      console.error('Failed to load full order for transaction email:', err);
+    }
+
+    const typeLabel = {
+      ORDER_CREATED: '📦 New Order Created',
+      ORDER_PAID: '✅ Order Payment Received',
+      ORDER_SHIPPED: '🚚 Order Shipped',
+      ORDER_RETURNED: '↩️ Order Return Initiated',
+      ORDER_CANCELLED: '❌ Order Cancelled',
+    }[transactionType] || '🔔 Transaction Update';
+
+    const itemsHtml = (fullOrder.items || []).map(item => {
+      const itemName = item.productName || item.name || 'Unknown Product';
+      const itemQty = item.quantity || item.qty || 1;
+      const customText = item.customizationText 
+        ? ` <br/><span style="font-size: 11px; color: #888;">Customization: "${item.customizationText}"</span>` 
+        : '';
+      return `
+        <li style="padding: 8px 0; border-bottom: 1px solid #eeeeee;">
+          <strong>${itemName}</strong> (Qty: ${itemQty}) — ₹${item.price}${customText}
+        </li>
+      `;
+    }).join('');
+
+    const customerName = fullOrder.address?.fullName || user?.name || 'Customer';
+    const customerPhone = fullOrder.address?.phone || user?.phone || 'N/A';
+    const customerEmail = user?.email || 'N/A';
+
+    const content = `
+      <h2 style="color: #e74c3c; margin-bottom: 20px;">${typeLabel}</h2>
+      <p><strong>New Transaction Alert:</strong></p>
+      
+      <div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107;">
+        <p style="margin: 0; color: #856404;"><strong>⚡ Timestamp:</strong> ${new Date().toLocaleString()}</p>
+      </div>
+
+      <div style="border: 1px solid #eeeeee; border-radius: 8px; padding: 20px; margin-top: 20px;">
+        <h3 style="color: #333; margin-top: 0;">Customer Details</h3>
+        <p style="margin: 5px 0;"><strong>Name:</strong> ${customerName}</p>
+        <p style="margin: 5px 0;"><strong>Email:</strong> ${customerEmail}</p>
+        <p style="margin: 5px 0;"><strong>Phone:</strong> ${customerPhone}</p>
+      </div>
+
+      <div style="border: 1px solid #eeeeee; border-radius: 8px; padding: 20px; margin-top: 20px;">
+        <h3 style="color: #333; margin-top: 0;">Order Information</h3>
+        <p style="margin: 5px 0;"><strong>Order ID:</strong> #${fullOrder.orderNumber || fullOrder.id}</p>
+        <p style="margin: 5px 0;"><strong>Total Amount:</strong> <span style="color: ${BRAND_COLOR}; font-size: 18px;">₹${fullOrder.total}</span></p>
+        <p style="margin: 5px 0;"><strong>Items Count:</strong> ${fullOrder.items?.length || 0}</p>
+        <p style="margin: 5px 0;"><strong>Payment Status:</strong> <strong style="color: ${fullOrder.paymentStatus === 'PAID' ? '#27ae60' : '#e74c3c'};">${fullOrder.paymentStatus || 'PENDING'}</strong></p>
+      </div>
+
+      <div style="border: 1px solid #eeeeee; border-radius: 8px; padding: 20px; margin-top: 20px;">
+        <h3 style="color: #333; margin-top: 0;">Items</h3>
+        <ul style="margin: 0; padding-left: 20px;">
+          ${itemsHtml}
+        </ul>
+      </div>
+
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="${process.env.ADMIN_URL || '#'}/orders/${fullOrder.id}" style="background-color: #e74c3c; color: #ffffff; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; box-shadow: 0 4px 8px rgba(231, 76, 60, 0.2);">
+          View in Admin Dashboard
+        </a>
+      </div>
+
+      <p style="color: #999; font-size: 12px; text-align: center; margin-top: 30px;">This is an automated notification. Please review this transaction in your admin panel.</p>
+    `;
+
+    try {
+      return await sendMail({
+        to: adminEmail,
+        subject: `${typeLabel} | Achaarwaala Admin`,
+        html: baseTemplate(content),
+      });
+    } catch (err) {
+      console.error('Failed to send admin transaction notification:', err);
+      throw err;
+    }
+  }
+};
