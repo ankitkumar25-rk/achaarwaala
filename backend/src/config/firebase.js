@@ -1,4 +1,5 @@
-import admin from 'firebase-admin';
+import { initializeApp, cert } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -67,8 +68,8 @@ const initializeFirebase = () => {
     }
 
     // Initialize Firebase Admin SDK
-    firebaseApp = admin.initializeApp({
-      credential: admin.credential.cert(serviceAccountKey),
+    firebaseApp = initializeApp({
+      credential: cert(serviceAccountKey),
       projectId: serviceAccountKey.project_id,
     });
 
@@ -95,7 +96,7 @@ export const verifyFirebaseToken = async (idToken) => {
   }
 
   try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await getAuth().verifyIdToken(idToken);
     return decodedToken;
   } catch (err) {
     console.error('[Firebase] Token verification failed:', err.message);

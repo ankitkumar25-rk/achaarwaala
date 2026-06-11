@@ -67,7 +67,7 @@ app.use(helmet());
 if (process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
     const proto = req.headers['x-forwarded-proto'];
-    if (req.secure || proto === 'https') return next();
+    if (req.secure || proto === 'https' || req.hostname === 'localhost' || req.hostname === '127.0.0.1') return next();
     return res.redirect(301, `https://${req.headers.host}${req.originalUrl}`);
   });
 }

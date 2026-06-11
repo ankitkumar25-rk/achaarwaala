@@ -2,11 +2,12 @@ import prisma from '../lib/prisma.js';
 import { signAccessToken, signRefreshToken, verifyToken } from '../config/paseto.js';
 import { createError } from '../middleware/errorHandler.js';
 import asyncHandler from '../utils/asyncHandler.js';
-import admin from 'firebase-admin';
+import { initializeApp, cert, getApps } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 
-if (process.env.FIREBASE_PROJECT_ID && !admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert({
+if (process.env.FIREBASE_PROJECT_ID && !getApps().length) {
+  initializeApp({
+    credential: cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
       privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
@@ -53,11 +54,11 @@ export const verifyFirebase = asyncHandler(async (req, res) => {
   const { idToken, name, email } = req.body;
   
   if (!idToken) throw createError('Firebase ID Token required', 400);
-  if (!admin.apps.length) throw createError('Firebase Admin not configured. Please add keys to .env', 500);
+  if (!getApps().length) throw createError('Firebase Admin not configured. Please add keys to .env', 500);
 
   let decodedToken;
   try {
-    decodedToken = await admin.auth().verifyIdToken(idToken);
+    decodedToken = await getAuth().verifyIdToken(idToken);
   } catch (err) {
     throw createError('Invalid Firebase token', 401);
   }

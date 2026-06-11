@@ -1,50 +1,48 @@
 /**
- * Database seed: creates realistic premium gifting, mementos & trophies catalog
+ * Database seed: creates actual AchaarWaala artisanal pickle catalog
  * Run with: node src/utils/seed.js
  */
 import 'dotenv/config';
 import prisma from '../lib/prisma.js';
-import bcrypt from 'bcryptjs';
 
 const categories = [
-  { name: 'TROPHIES', slug: 'trophies', description: 'Premium trophies for awards and recognition' },
-  { name: '3D_MODELS', slug: '3d-models', description: 'Intricate 3D models and sculptures' },
-  { name: 'CORPORATE_GIFTS', slug: 'corporate-gifts', description: 'Badges, IDs, and general corporate gifting items' },
-  { name: 'MOMENTOS', slug: 'momentos', description: 'Elegant glass and crystal mementos' },
-  { name: 'OTHERS', slug: 'others', description: 'Other versatile gift items' },
-  { name: 'PEN_HOLDERS', slug: 'pen-holders', description: 'Custom desktop pen holders' },
-  { name: 'TEMPLES', slug: 'temples', description: 'Miniature temple replicas and artifacts' }
+  { name: 'Raw Mango (Keri)', slug: 'raw-mango', description: 'Traditional handcrafted mango pickles made from premium local mangoes' },
+  { name: 'Desert Berry (Ker)', slug: 'ker', description: 'Rare and authentic Rajasthani desert berry (Ker) pickles' },
+  { name: 'Lemon (Nimbu)', slug: 'lemon', description: 'Zesty lemon pickles, oil-free and traditional sweet-tangy varieties' },
+  { name: 'Red Chilli (Lal Mirch)', slug: 'red-chilli', description: 'Fiery stuffed and sliced Rajasthani red chilli pickles' },
+  { name: 'Green Chilli (Hari Mirch)', slug: 'green-chilli', description: 'Spicy green chilli pickles, including the famous Athana Mirch' },
+  { name: 'Garlic (Lahsun)', slug: 'garlic', description: 'Robust garlic pickles and traditional lahsun chutneys' },
+  { name: 'Vegetables', slug: 'vegetables', description: 'Healthy and unique pickles made from ginger, turmeric, bitter gourd, and more' },
+  { name: 'Rajasthani Special', slug: 'rajasthani-special', description: 'Exclusive traditional delicacies like Sangri, Gunda, and Karonda' },
+  { name: 'Murabba (Preserves)', slug: 'murabba', description: 'Sweet and nutritious fruit preserves including Amla and Apple Murabba' },
+  { name: 'Other Products', slug: 'others', description: 'Earthy local essentials like Gulkand, Kachi Ghani Oil, and traditional Papad' }
 ];
 
 async function main() {
-  console.log('🏆 Seeding database with Trophies & Gifts...');
+  console.log('🌶️ Seeding database with actual AchaarWaala Pickles...');
 
   // Create admin user
-  const adminHash = await bcrypt.hash('Admin@1234', 12);
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@manufact.in' },
+    where: { email: 'admin@achaarwaala.com' },
     update: {},
     create: {
       name: 'Admin',
-      email: 'admin@manufact.in',
-      passwordHash: adminHash,
+      email: 'admin@achaarwaala.com',
+      phone: '9999999999',
       role: 'SUPER_ADMIN',
-      isEmailVerified: true,
     },
   });
   console.log('✅ Admin user created:', admin.email);
 
   // Create demo customer
-  const customerHash = await bcrypt.hash('Customer@1234', 12);
   await prisma.user.upsert({
     where: { email: 'customer@example.com' },
     update: {},
     create: {
-      name: 'Corporate Buyer',
+      name: 'Ankit Kumar',
       email: 'customer@example.com',
-      passwordHash: customerHash,
       phone: '9876543210',
-      isEmailVerified: true,
+      role: 'CUSTOMER',
     },
   });
   console.log('✅ Demo customer created');
@@ -61,27 +59,132 @@ async function main() {
   }
   console.log('✅ Categories created/updated:', Object.keys(createdCategories).length);
 
-  // Create exactly 19 products
+  // Create products (actual achaar varieties)
   const products = [
-    { name: 'Golden Shield Excellence Award Plaque', slug: 'golden-shield-excellence-award-plaque', categorySlug: 'trophies', price: 1850, mrp: 2200, stock: 150, unit: 'piece', isFeatured: true, tags: ['award', 'shield', 'gold'] },
-    { name: 'Geometric Crystal Tower Achievement Award', slug: 'geometric-crystal-tower-achievement-award', categorySlug: 'trophies', price: 950, mrp: 1200, stock: 80, unit: 'piece', tags: ['crystal', 'tower'] },
-    { name: 'Star Performer Blue Glass Trophy', slug: 'star-performer-blue-glass-trophy', categorySlug: 'trophies', price: 1200, mrp: 1500, stock: 100, unit: 'piece', isFeatured: true, tags: ['glass', 'star', 'blue'] },
-    { name: 'Premium Leadership Metal Cup', slug: 'premium-leadership-metal-cup', categorySlug: 'trophies', price: 3400, mrp: 4000, stock: 12, unit: 'piece', tags: ['metal', 'cup'] },
-    { name: 'Wooden Base Acrylic Recognition Trophy', slug: 'wooden-base-acrylic-recognition-trophy', categorySlug: 'trophies', price: 750, mrp: 900, stock: 45, unit: 'piece', tags: ['acrylic', 'wood'] },
-    { name: 'Corporate Office 3D Architecture Model', slug: 'corporate-office-3d-architecture-model', categorySlug: '3d-models', price: 14500, mrp: 16000, stock: 5, unit: 'piece', tags: ['3d', 'model', 'office'] },
-    { name: 'Bronze Engine Replica Model', slug: 'bronze-engine-replica-model', categorySlug: '3d-models', price: 8500, mrp: 10000, stock: 8, unit: 'piece', tags: ['bronze', 'replica'] },
-    { name: 'Miniature Ship 3D Keepsake', slug: 'miniature-ship-3d-keepsake', categorySlug: '3d-models', price: 3200, mrp: 4000, stock: 15, unit: 'piece', tags: ['ship', 'keepsake'] },
-    { name: 'Executive Gold Plated Lapel Pin', slug: 'executive-gold-plated-lapel-pin', categorySlug: 'corporate-gifts', price: 450, mrp: 600, stock: 500, unit: 'piece', tags: ['lapel', 'badge'] },
-    { name: 'Custom Engraved Name Plate (Metal)', slug: 'custom-engraved-name-plate-metal', categorySlug: 'corporate-gifts', price: 1200, mrp: 1500, stock: 50, unit: 'piece', tags: ['name-plate', 'engraved'] },
-    { name: 'Premium Leather Corporate Gift Set', slug: 'premium-leather-corporate-gift-set', categorySlug: 'corporate-gifts', price: 2500, mrp: 3000, stock: 35, unit: 'piece', isFeatured: true, tags: ['leather', 'gift-set'] },
-    { name: 'Crystal Diamond Anniversary Momento', slug: 'crystal-diamond-anniversary-momento', categorySlug: 'momentos', price: 2100, mrp: 2600, stock: 40, unit: 'piece', tags: ['diamond', 'crystal'] },
-    { name: 'Employee of the Month Wooden Momento', slug: 'employee-of-the-month-wooden-momento', categorySlug: 'momentos', price: 850, mrp: 1100, stock: 120, unit: 'piece', tags: ['wooden', 'momento'] },
-    { name: 'Silver Jubilee Celebration Photo Frame Momento', slug: 'silver-jubilee-celebration-photo-frame-momento', categorySlug: 'momentos', price: 3000, mrp: 3500, stock: 20, unit: 'piece', tags: ['silver', 'frame'] },
-    { name: 'Rosewood Executive Pen Holder', slug: 'rosewood-executive-pen-holder', categorySlug: 'pen-holders', price: 650, mrp: 800, stock: 85, unit: 'piece', tags: ['rosewood', 'pen-holder'] },
-    { name: 'Marble Base Multi-Pen Stand with Clock', slug: 'marble-base-multi-pen-stand-with-clock', categorySlug: 'pen-holders', price: 1500, mrp: 1800, stock: 30, unit: 'piece', tags: ['marble', 'clock'] },
-    { name: 'Miniature Brass Kedar Dome Temple', slug: 'miniature-brass-kedar-dome-temple', categorySlug: 'temples', price: 4500, mrp: 5200, stock: 10, unit: 'piece', tags: ['temple', 'brass'], isFeatured: true },
-    { name: 'Wooden Carved Desktop Mandir', slug: 'wooden-carved-desktop-mandir', categorySlug: 'temples', price: 2100, mrp: 2800, stock: 25, unit: 'piece', tags: ['wooden', 'carved'] },
-    { name: 'Personalized Silver Cufflinks', slug: 'personalized-silver-cufflinks', categorySlug: 'others', price: 1800, mrp: 2400, stock: 30, unit: 'piece', tags: ['cufflinks', 'silver'] }
+    { 
+      name: 'Desi Keri Lohagal Achaar', 
+      slug: 'desi-keri-lohagal-achaar', 
+      categorySlug: 'raw-mango', 
+      price: 400, 
+      mrp: 499, 
+      stock: 100, 
+      unit: '500g', 
+      isFeatured: true, 
+      tags: ['mango', 'keri', 'traditional', 'best-seller'] 
+    },
+    { 
+      name: 'Ker Sangri Special Rajasthani Achaar', 
+      slug: 'ker-sangri-special-rajasthani-achaar', 
+      categorySlug: 'rajasthani-special', 
+      price: 400, 
+      mrp: 550, 
+      stock: 50, 
+      unit: '500g', 
+      isFeatured: true, 
+      tags: ['rajasthani', 'ker', 'sangri', 'royal'] 
+    },
+    { 
+      name: 'Athana Hari Mirch (Green Chilli) Achaar', 
+      slug: 'athana-hari-mirch-green-chilli-achaar', 
+      categorySlug: 'green-chilli', 
+      price: 400, 
+      mrp: 499, 
+      stock: 120, 
+      unit: '500g', 
+      isFeatured: true, 
+      tags: ['chilli', 'green-chilli', 'athana', 'spicy'] 
+    },
+    { 
+      name: 'Desi Lahsun (Garlic) Achaar', 
+      slug: 'desi-lahsun-garlic-achaar', 
+      categorySlug: 'garlic', 
+      price: 400, 
+      mrp: 499, 
+      stock: 90, 
+      unit: '500g', 
+      tags: ['garlic', 'lahsun', 'spicy'] 
+    },
+    { 
+      name: 'Nimbu Begar Tel (Oil-free Lemon) Achaar', 
+      slug: 'nimbu-begar-tel-oil-free-lemon-achaar', 
+      categorySlug: 'lemon', 
+      price: 400, 
+      mrp: 499, 
+      stock: 110, 
+      unit: '500g', 
+      tags: ['lemon', 'nimbu', 'oil-free', 'digestive'] 
+    },
+    { 
+      name: 'Lal Mirch Bharwa (Stuffed Red Chilli) Achaar', 
+      slug: 'lal-mirch-bharwa-stuffed-red-chilli-achaar', 
+      categorySlug: 'red-chilli', 
+      price: 400, 
+      mrp: 520, 
+      stock: 75, 
+      unit: '500g', 
+      isFeatured: true, 
+      tags: ['chilli', 'red-chilli', 'stuffed', 'fiery'] 
+    },
+    { 
+      name: 'Lesua / Gunda (Gum Berry) Achaar', 
+      slug: 'lesua-gunda-gum-berry-achaar', 
+      categorySlug: 'rajasthani-special', 
+      price: 400, 
+      mrp: 499, 
+      stock: 60, 
+      unit: '500g', 
+      tags: ['gunda', 'lesua', 'berry', 'rajasthani'] 
+    },
+    { 
+      name: 'Ker 0-size Premium Achaar', 
+      slug: 'ker-0-size-premium-achaar', 
+      categorySlug: 'ker', 
+      price: 450, 
+      mrp: 600, 
+      stock: 40, 
+      unit: '500g', 
+      tags: ['ker', 'premium', 'berry'] 
+    },
+    { 
+      name: 'Kachi Haldi (Fresh Turmeric) Achaar', 
+      slug: 'kachi-haldi-fresh-turmeric-achaar', 
+      categorySlug: 'vegetables', 
+      price: 400, 
+      mrp: 499, 
+      stock: 80, 
+      unit: '500g', 
+      tags: ['turmeric', 'haldi', 'healthy', 'immunity'] 
+    },
+    { 
+      name: 'Amla Murabba (Sweet Gooseberry)', 
+      slug: 'amla-murabba-sweet-gooseberry', 
+      categorySlug: 'murabba', 
+      price: 400, 
+      mrp: 499, 
+      stock: 130, 
+      unit: '500g', 
+      tags: ['amla', 'murabba', 'sweet', 'gooseberry'] 
+    },
+    { 
+      name: 'Gulkand (Sun-cooked Rose Petals)', 
+      slug: 'gulkand-sun-cooked-rose-petals', 
+      categorySlug: 'others', 
+      price: 350, 
+      mrp: 450, 
+      stock: 140, 
+      unit: '500g', 
+      tags: ['gulkand', 'rose', 'sweet', 'ayurvedic'] 
+    },
+    { 
+      name: 'Desi Chana Methi Achaar', 
+      slug: 'desi-chana-methi-achaar', 
+      categorySlug: 'vegetables', 
+      price: 400, 
+      mrp: 480, 
+      stock: 95, 
+      unit: '500g', 
+      tags: ['chana', 'methi', 'mango', 'protein'] 
+    }
   ];
 
   let productCount = 0;
@@ -96,11 +199,11 @@ async function main() {
       },
       create: {
         ...data,
-        shortDesc: `Premium ${data.name.toLowerCase()} for the finest recognition.`,
-        description: `This exquisite ${data.name} is crafted from the highest quality materials, perfect for corporate gifting and lasting mementos. Featuring elegant styling and precision finishes, it is an impressive centerpiece for any collection.`,
+        shortDesc: `Pure handcrafted ${data.name} made in Lohagaal, Rajasthan.`,
+        description: `This traditional ${data.name} is prepared using authentic, generation-old Rajasthani recipes. Sourced directly from local villages, it features premium ingredients, pure cold-pressed oil, and home-ground spices, aged naturally under the sun to bring you "Asli Swad, Seedha Gaon Se".`,
         categoryId: createdCategories[categorySlug],
-        certifications: ['ISO 9001:2015'],
-        lowStockAlert: 5
+        certifications: ['FSSAI Certified', '100% Handcrafted'],
+        lowStockAlert: 10
       },
     });
     productCount++;
@@ -108,8 +211,8 @@ async function main() {
 
   console.log(`✅ Products seeded: ${productCount}`);
   console.log('\n🎉 Seed complete!');
-  console.log('   Admin: admin@manufact.in / Admin@1234');
-  console.log('   Customer: customer@example.com / Customer@1234');
+  console.log('   Admin: admin@achaarwaala.com / OTP Test Phone: 9999999999');
+  console.log('   Customer: customer@example.com / OTP Test Phone: 9876543210');
 }
 
 main()
