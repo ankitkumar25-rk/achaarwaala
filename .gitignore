@@ -16,7 +16,7 @@ frontend-store/dist/
 frontend-store/dist-ssr/
 frontend-admin/dist/
 frontend-admin/dist-ssr/
-
+img/
 # ── Environment Variables ────────────────────────────────────
 .env
 .env.local
