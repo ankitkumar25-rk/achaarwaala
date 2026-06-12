@@ -4,7 +4,7 @@ import { useAdminStore } from '../App';
 import api from '../api/client';
 import toast from 'react-hot-toast';
 import { Eye, EyeOff } from 'lucide-react';
-import adminLogo from '../assets/logo.png';
+import adminLogo from '../assets/logo_black.svg';
 
 export default function AdminLogin() {
   const [form, setForm] = useState({ email: '', password: '' });

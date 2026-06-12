@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, User, Search } from 'lucide-react';
+import { ShoppingCart, Menu, X, User } from 'lucide-react';
 import { useAuthStore, useCartStore } from '../store';
-import logoImg from '../assets/images/logo.png';
+import logoImg from '../assets/images/logo_black.svg';
 
 export default function Navbar() {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -29,62 +29,51 @@ export default function Navbar() {
     { to: '/contact', label: 'Contact Us' },
   ];
 
-  const headerClass = `sticky top-0 z-50 transition-all duration-300 ${
-    isScrolled
-      ? 'bg-[#F7F1E3]/95 border-b border-[#E8E2D8] backdrop-blur-md shadow-xs'
-      : 'bg-[#F7F1E3] border-b border-[#E8E2D8]'
-  }`;
+  const headerClass = `sticky top-0 z-50 transition-all duration-300 ${isScrolled
+    ? 'bg-[#F7F1E3]/95 border-b border-[#E8E2D8] backdrop-blur-md shadow-xs'
+    : 'bg-[#F7F1E3] border-b border-[#E8E2D8]'
+    }`;
 
   return (
     <header className={headerClass}>
-      <div className="max-w-screen-2xl mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="flex items-center justify-between h-20 md:h-24">
-          
-          {/* Brand Logo */}
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="relative flex items-center h-16 md:h-20">
+
+          {/* Left: Brand Logo */}
           <Link to="/" className="flex items-center shrink-0">
-            <img src={logoImg} alt="Achaarwaala Logo" className="h-10 md:h-12 w-auto object-contain mix-blend-multiply" />
+            <img src={logoImg} alt="Achaarwaala Logo" className="block h-8 md:h-10 w-auto object-contain mix-blend-multiply" />
           </Link>
 
-          {/* Center Nav - COLLECTIONS · HERITAGE · PROCESS · JOURNAL (uppercase, small, spaced) */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-            {navLinks.map((l, index) => {
-              const isActive = location.pathname === l.to;
-              return (
-                <div key={l.label} className="flex items-center">
-                  <Link
-                    to={l.to}
-                    className={`font-sans text-[14px] uppercase tracking-[0.12em] transition-colors py-2 ${
-                      isActive
-                        ? 'text-[#D98C00]'
-                        : 'text-[#2E5731] hover:text-[#E5B800]'
-                    }`}
-                  >
-                    {l.label}
-                  </Link>
-                  {index < navLinks.length - 1 && (
-                    <span className="text-[#E8E2D8] text-[8px] mx-3 lg:mx-4">•</span>
-                  )}
-                </div>
-              );
-            })}
+          {/* Center: Nav Links (truly centered via absolute) */}
+          <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center">
+              {navLinks.map((l, index) => {
+                const isActive = location.pathname === l.to;
+                return (
+                  <div key={l.label} className="flex items-center">
+                    <Link
+                      to={l.to}
+                      className={`font-sans text-[13px] uppercase tracking-[0.10em] transition-colors py-2 whitespace-nowrap flex items-center ${isActive
+                        ? 'text-[#C8922A]'
+                        : 'text-[#1A1A1A] hover:text-[#C8922A]'
+                        }`}
+                    >
+                      {l.label}
+                    </Link>
+                    {index < navLinks.length - 1 && (
+                      <span className="text-[#E8E2D8] text-[8px] mx-3 lg:mx-4">•</span>
+                    )}
+                  </div>
+                );
+              })}
           </nav>
 
-          {/* Right: Search, Account, Cart icons */}
-          <div className="flex items-center gap-4">
-            {/* Search Icon */}
-            <Link
-              to="/products"
-              className="p-2 text-[#2E5731] hover:text-[#E5B800] transition-colors"
-              aria-label="Search"
-            >
-              <Search className="w-4.5 h-4.5" />
-            </Link>
-
+          {/* Right: Account, Cart icons */}
+          <div className="flex items-center gap-4 ml-auto">
             {/* Account Icon */}
             <div className="flex items-center">
               {user ? (
                 <div className="relative group">
-                  <button className="p-2 text-[#2E5731] hover:text-[#E5B800] transition-colors flex items-center gap-1.5">
+                  <button className="p-2 text-[#1A1A1A] hover:text-[#C8922A] transition-colors flex items-center gap-1.5">
                     <User className="w-4.5 h-4.5" />
                     <span className="text-[10px] font-sans uppercase tracking-wider hidden sm:inline-block max-w-[80px] truncate text-[#6B6560]">
                       {user.name?.split(' ')[0] || 'User'}
@@ -103,7 +92,7 @@ export default function Navbar() {
               ) : (
                 <button
                   onClick={openAuthModal}
-                  className="p-2 text-[#2E5731] hover:text-[#E5B800] transition-colors"
+                  className="p-2 text-[#1A1A1A] hover:text-[#C8922A] transition-colors"
                   aria-label="Login"
                 >
                   <User className="w-4.5 h-4.5" />
@@ -114,7 +103,7 @@ export default function Navbar() {
             {/* Cart Icon */}
             <Link
               to="/cart"
-              className="p-2 relative text-[#2E5731] hover:text-[#E5B800] transition-colors"
+              className="p-2 relative text-[#1A1A1A] hover:text-[#C8922A] transition-colors flex items-center"
               aria-label="Cart"
               id="cart-link-btn"
             >
@@ -130,7 +119,7 @@ export default function Navbar() {
             <div className="md:hidden">
               <button
                 onClick={() => setMenuOpen(!isMenuOpen)}
-                className="p-2 text-[#2E5731] hover:text-[#E5B800] transition-colors"
+                className="p-2 text-[#1A1A1A] hover:text-[#C8922A] transition-colors"
                 aria-label="Menu"
                 aria-expanded={isMenuOpen}
               >
@@ -147,7 +136,7 @@ export default function Navbar() {
         <div className="md:hidden fixed inset-0 top-0 left-0 w-full h-screen z-100 bg-[#F7F1E3] p-6 flex flex-col overflow-y-auto">
           <div className="flex items-center justify-between mb-8">
             <img src={logoImg} alt="Achaarwaala Logo" className="h-10 w-auto object-contain mix-blend-multiply" />
-            <button onClick={() => setMenuOpen(false)} className="p-2 text-[#2E5731] hover:text-[#E5B800]">
+            <button onClick={() => setMenuOpen(false)} className="p-2 text-[#1A1A1A] hover:text-[#C8922A]">
               <X className="w-6 h-6" />
             </button>
           </div>
@@ -159,9 +148,8 @@ export default function Navbar() {
                   key={l.label}
                   to={l.to}
                   onClick={() => setMenuOpen(false)}
-                  className={`text-[14px] uppercase tracking-[0.12em] font-medium py-2 border-b border-[#E8E2D8] transition-colors ${
-                    isActive ? 'text-[#D98C00]' : 'text-[#2E5731] hover:text-[#E5B800]'
-                  }`}
+                  className={`text-[14px] uppercase tracking-[0.12em] font-medium py-2 border-b border-[#E8E2D8] transition-colors ${isActive ? 'text-[#C8922A]' : 'text-[#1A1A1A] hover:text-[#C8922A]'
+                    }`}
                 >
                   {l.label}
                 </Link>
@@ -172,14 +160,14 @@ export default function Navbar() {
                 <Link
                   to="/account"
                   onClick={() => setMenuOpen(false)}
-                  className="text-[14px] uppercase tracking-[0.12em] font-medium py-2 border-b border-[#E8E2D8] text-[#2E5731] hover:text-[#E5B800]"
+                  className="text-[14px] uppercase tracking-[0.12em] font-medium py-2 border-b border-[#E8E2D8] text-[#1A1A1A] hover:text-[#C8922A]"
                 >
                   My Account
                 </Link>
                 <Link
                   to="/orders"
                   onClick={() => setMenuOpen(false)}
-                  className="text-[14px] uppercase tracking-[0.12em] font-medium py-2 border-b border-[#E8E2D8] text-[#2E5731] hover:text-[#E5B800]"
+                  className="text-[14px] uppercase tracking-[0.12em] font-medium py-2 border-b border-[#E8E2D8] text-[#1A1A1A] hover:text-[#C8922A]"
                 >
                   My Orders
                 </Link>

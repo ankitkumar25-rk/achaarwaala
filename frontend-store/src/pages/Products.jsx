@@ -68,133 +68,16 @@ export default function Products() {
     staleTime: 1000 * 60 * 30, // 30 minutes
   });
 
-  const MOCK_CATEGORIES = [
-    { id: 'cat-1', name: 'Mango Specialities', slug: 'mango-achaar', _count: { products: 3 } },
-    { id: 'cat-2', name: 'Artisanal Chilli', slug: 'chilli-achaar', _count: { products: 2 } },
-    { id: 'cat-3', name: 'Desert Delicacies', slug: 'desert-achaar', _count: { products: 1 } },
-    { id: 'cat-4', name: 'Heritage Blends', slug: 'heritage-blends', _count: { products: 2 } },
-  ];
+  const resolvedCategories = catData || [];
 
-  const MOCK_PRODUCTS = [
-    {
-      id: 'prod-1',
-      name: 'Heritage Mango Pickle',
-      slug: 'heritage-mango',
-      price: 450,
-      mrp: 550,
-      unit: '500g',
-      isFeatured: true,
-      stock: 50,
-      images: [{ url: imgBottomRight, isPrimary: true }],
-      category: { name: 'Mango Specialities', slug: 'mango-achaar' }
-    },
-    {
-      id: 'prod-2',
-      name: 'Rustic Chilli Pickle',
-      slug: 'rustic-chilli',
-      price: 425,
-      mrp: 499,
-      unit: '500g',
-      isFeatured: true,
-      stock: 40,
-      images: [{ url: imgLeft, isPrimary: true }],
-      category: { name: 'Artisanal Chilli', slug: 'chilli-achaar' }
-    },
-    {
-      id: 'prod-3',
-      name: 'Ker Sangri Achaar',
-      slug: 'ker-sangri',
-      price: 599,
-      mrp: 699,
-      unit: '400g',
-      isFeatured: true,
-      stock: 25,
-      images: [{ url: imgTopRight, isPrimary: true }],
-      category: { name: 'Desert Delicacies', slug: 'desert-achaar' }
-    },
-    {
-      id: 'prod-4',
-      name: 'Ancestral Lemon Pickle',
-      slug: 'ancestral-lemon',
-      price: 399,
-      mrp: 450,
-      unit: '500g',
-      isFeatured: false,
-      stock: 35,
-      images: [{ url: imgBottomRight, isPrimary: true }],
-      category: { name: 'Heritage Blends', slug: 'heritage-blends' }
-    },
-    {
-      id: 'prod-5',
-      name: 'Spicy Garlic Pickle',
-      slug: 'spicy-garlic',
-      price: 480,
-      mrp: 520,
-      unit: '400g',
-      isFeatured: true,
-      stock: 15,
-      images: [{ url: imgLeft, isPrimary: true }],
-      category: { name: 'Heritage Blends', slug: 'heritage-blends' }
-    },
-    {
-      id: 'prod-6',
-      name: 'Dry Mango (Amchur) Special',
-      slug: 'dry-mango-amchur',
-      price: 350,
-      mrp: 399,
-      unit: '250g',
-      isFeatured: false,
-      stock: 60,
-      images: [{ url: imgTopRight, isPrimary: true }],
-      category: { name: 'Mango Specialities', slug: 'mango-achaar' }
+  const resolvedProductsData = data || {
+    data: [],
+    meta: {
+      total: 0,
+      totalPages: 1,
+      currentPage: 1
     }
-  ];
-
-  const resolvedCategories = (catData && catData.length > 0) ? catData : MOCK_CATEGORIES;
-
-  // Filter products based on selected filters
-  let filteredMockProducts = MOCK_PRODUCTS;
-  if (filters.category) {
-    filteredMockProducts = filteredMockProducts.filter(p => p.category?.slug === filters.category);
-  }
-  if (filters.isFeatured === 'true') {
-    filteredMockProducts = filteredMockProducts.filter(p => p.isFeatured);
-  }
-  if (filters.minPrice) {
-    filteredMockProducts = filteredMockProducts.filter(p => p.price >= Number(filters.minPrice));
-  }
-  if (filters.maxPrice) {
-    filteredMockProducts = filteredMockProducts.filter(p => p.price <= Number(filters.maxPrice));
-  }
-  if (filters.search) {
-    const term = filters.search.toLowerCase();
-    filteredMockProducts = filteredMockProducts.filter(p => 
-      p.name.toLowerCase().includes(term) || 
-      p.category?.name.toLowerCase().includes(term)
-    );
-  }
-
-  // Sort products
-  if (sort === 'price') {
-    filteredMockProducts = [...filteredMockProducts].sort((a, b) => 
-      order === 'asc' ? a.price - b.price : b.price - a.price
-    );
-  } else if (sort === 'name') {
-    filteredMockProducts = [...filteredMockProducts].sort((a, b) => 
-      order === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
-    );
-  }
-
-  const resolvedProductsData = (data && data.data && data.data.length > 0) 
-    ? data 
-    : {
-        data: filteredMockProducts,
-        meta: {
-          total: filteredMockProducts.length,
-          totalPages: 1,
-          currentPage: 1
-        }
-      };
+  };
 
   const pageNumbers = resolvedProductsData?.meta?.totalPages > 1
     ? Array.from({ length: resolvedProductsData.meta.totalPages }, (_, i) => i + 1)

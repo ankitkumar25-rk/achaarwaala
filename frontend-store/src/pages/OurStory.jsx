@@ -1,131 +1,219 @@
-import { Sun, Heart, Award } from 'lucide-react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
+import imgLeft from '../assets/images/78d24d8c-b63f-4b3e-a9f3-6f5752927c0a.png';
+import imgTopRight from '../assets/images/60bc9565-b5f4-454d-a8e5-36addfed5fd0 (1).png';
+import imgBottomRight from '../assets/images/b085284f-af0d-4da2-8ead-aa66bd3075eb.png';
+
+const Marquee = ({ text }) => {
+  return (
+    <div className="w-full overflow-hidden whitespace-nowrap py-12 relative flex">
+      {/* Absolute gradient masks for smooth fade on edges */}
+      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#111111] to-transparent z-10"></div>
+      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#111111] to-transparent z-10"></div>
+      
+      <div className="flex animate-[marquee_40s_linear_infinite] shrink-0">
+        <span className="font-display text-4xl lg:text-5xl text-[#C8922A] mx-4 font-light tracking-wider">
+          {text}
+        </span>
+        <span className="font-display text-4xl lg:text-5xl text-[#C8922A] mx-4 font-light tracking-wider">
+          {text}
+        </span>
+      </div>
+    </div>
+  );
+};
 
 export default function OurStory() {
-  const milestones = [
-    { year: '1946', title: 'The Earthen Jars', desc: 'Dadaji started curing hand-harvested mangoes in ceramic martabans under the courtyard sun of Lohagaal, Rajasthan.' },
-    { year: '1978', title: 'Ancestral Spice Blends', desc: 'Formalized the slow spice-curing ratios and single-origin mustard oil traditions that define our signature batches.' },
-    { year: '2012', title: 'The Sacred Inheritance', desc: 'Passed down to the third generation, maintaining the 100% natural, preservative-free promise.' },
-    { year: '2026 & Beyond', title: 'The Digital Archive', desc: 'Opening our private family reserve batches to discerning palates across India, shipped directly from our village estate.' }
-  ];
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://achaarwaala.com/our-story"
+    },
+    "name": "Our Story - The Heritage of Achaarwaala",
+    "description": "Discover the 1000-year-old legend of Lohagaal and the artisanal sun-curing traditions that define Achaarwaala's heritage."
+  };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF4] text-[#6B6560] py-16 lg:py-24 page-enter">
-      <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 space-y-20">
+    <div className="bg-[#FAFAF4] min-h-screen">
+      <SEO 
+        title="Our Heritage | Achaarwaala"
+        description="Discover the 1000-year-old legend of Lohagaal and the artisanal sun-curing traditions that define Achaarwaala's heritage."
+        schemaMarkup={schema}
+      />
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
+
+      {/* CHAPTER I */}
+      <section className="w-full bg-[#1A1A1A] marwadi-texture-dark relative py-24 lg:py-32 overflow-hidden border-b border-[#E8E2D8]/10">
+        {/* Subtle texture over dark bg */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #C8922A 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
         
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#9A8A70]">
-            OUR GENESIS
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10 flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+          <div className="w-full lg:w-1/2 text-left">
+            <span className="font-display text-[80px] lg:text-[100px] font-extralight text-[#C8922A] opacity-40 leading-none block mb-6">I</span>
+            <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#9A8A70] block mb-6">
+              THE LEGEND · EST. 1000+ YEARS
+            </span>
+            <h2 className="font-display text-5xl lg:text-[56px] font-light text-[#FFFFFF] leading-[1.1] mb-4">
+              Where Iron Melted
+            </h2>
+            <p className="font-display italic text-2xl text-[#C8922A] mb-8 font-light">
+              The story of a village born from a miracle
+            </p>
+            <p className="font-sans text-[15px] leading-[1.85] text-[#D1CEC7] max-w-lg">
+              After the great war of Kurukshetra, the victorious Pandavas traveled through the Thar. They stopped at a sacred kund to bathe — and as they stepped in, the iron armour fused to their battle-worn bodies began to dissolve. The iron melted. The village born around that kund was named Lohagaal — <span className="italic">Loha</span> (iron) + <span className="italic">Gal</span> (to melt).
+            </p>
+          </div>
+          <div className="w-full lg:w-1/2">
+            <div className="aspect-[4/5] sm:aspect-[3/2] lg:aspect-[4/5] rounded-xl overflow-hidden border border-[#C8922A]/20 shadow-2xl relative">
+              <img src={imgLeft} alt="Ancient architecture glowing in golden light" className="w-full h-full object-cover filter brightness-75 sepia-[0.3]" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CHAPTER II */}
+      <section className="w-full bg-transparent marwadi-texture relative py-24 lg:py-32 border-b border-[#E8E2D8]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10 flex flex-col lg:flex-row-reverse items-center gap-16 lg:gap-24">
+          <div className="w-full lg:w-1/2 text-left">
+            <span className="font-display text-[80px] lg:text-[100px] font-extralight text-[#C8922A] opacity-40 leading-none block mb-6">II</span>
+            <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#9A8A70] block mb-6">
+              THE SACRED KUND
+            </span>
+            <h2 className="font-display text-4xl lg:text-[56px] font-light text-[#1A1A1A] leading-[1.1] mb-8">
+              Rajasthan's Hidden Ganga
+            </h2>
+            <p className="font-sans text-[15px] leading-[1.85] text-[#6B6560] max-w-lg mb-8">
+              In the heart of the Thar desert, where water is a miracle, Lohagaal holds a kund that never runs dry. All year, water flows — an impossibility in this land of sand and sun. Families travel from across Rajasthan to immerse the ashes of their loved ones here, just as one would at the Ganga. Every Sawan, thousands bathe in its waters. The village breathes with pilgrims.
+            </p>
+            <div className="border-l border-[#C8922A] pl-6 py-2">
+              <p className="font-display italic text-xl text-[#1A1A1A]">Year-round water · In the heart of the Thar desert</p>
+            </div>
+          </div>
+          <div className="w-full lg:w-1/2">
+            <div className="aspect-[4/5] rounded-xl overflow-hidden border border-[#E8E2D8]">
+              <img src={imgTopRight} alt="Sacred kund water with floating marigolds" className="w-full h-full object-cover filter sepia-[0.1]" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CHAPTER III */}
+      <section className="w-full relative py-32 lg:py-48 overflow-hidden border-b border-[#E8E2D8] flex items-center justify-center">
+        {/* Large background photo with overlay */}
+        <div className="absolute inset-0 z-0">
+          <img src="https://images.unsplash.com/photo-1463130456064-072044813db1?auto=format&fit=crop&q=80&w=1600" alt="Ancient tree branches" className="w-full h-full object-cover opacity-[0.15] grayscale" />
+          <div className="absolute inset-0 bg-[#FAFAF4]/70 backdrop-blur-[2px]"></div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10 text-center">
+          <span className="font-display text-[80px] lg:text-[100px] font-extralight text-[#C8922A] opacity-40 leading-none block mb-6">III</span>
+          <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#9A8A70] block mb-6">
+            THE JAAL WALI KERI
           </span>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6.5xl font-light text-[#1A1A1A] leading-tight">
-            The Legend of <span className="italic text-[#1A1A1A]">Lohagaal</span>
-          </h1>
-          <p className="font-sans text-sm text-[#6B6560] max-w-2xl mx-auto leading-relaxed">
-            Preserving Rajasthan's dry-cured culinary heritage through three generations of patient sun-curing.
+          <h2 className="font-display text-4xl lg:text-[56px] font-light text-[#1A1A1A] leading-[1.1] mb-10">
+            The Trees That Refused to Leave
+          </h2>
+          <p className="font-sans text-[15px] leading-[1.85] text-[#6B6560] max-w-2xl mx-auto mb-16 text-left sm:text-center">
+            Lohagaal is surrounded by ancient mango trees — but not just any mango. The <span className="italic">jaal wali keri</span>, a rare variety found only in this microclimate, grows here in abundance. In a desert where nothing should flourish, these trees produce fruit every season without fail. For the women of the village, making achaar was never a hobby. It was the only way to preserve the harvest — and feed a family through the year.
+          </p>
+          
+          <div className="px-4 sm:px-12 py-10 bg-[#FFFFFF]/80 border border-[#E8E2D8] rounded-2xl backdrop-blur-sm shadow-sm relative">
+            <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-6xl text-[#C8922A] opacity-30 font-display">"</span>
+            <p className="font-display italic text-[28px] md:text-[36px] leading-[1.3] text-[#1A1A1A] mb-4">
+              <span className="font-['Noto_Sans_Devanagari']">अचार बनाना कोई शौक नहीं था। यह बचने का एक तरीका था।</span>
+            </p>
+            <p className="font-sans text-xs italic text-[#9A8A70] uppercase tracking-widest">
+              Achaar-making was not a hobby. It was survival.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CHAPTER IV */}
+      <section className="w-full bg-transparent marwadi-texture relative py-24 lg:py-32 border-b border-[#E8E2D8]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-0">
+          <div className="w-full lg:w-7/12 lg:pr-12">
+            <div className="aspect-[4/3] rounded-xl overflow-hidden border border-[#E8E2D8] shadow-md z-10 relative">
+              <img src={imgBottomRight} alt="Vibrant mela gathering with warm colors" className="w-full h-full object-cover" />
+            </div>
+          </div>
+          <div className="w-full lg:w-6/12 bg-[#F2EDE0] p-10 sm:p-14 lg:p-16 rounded-xl border border-[#E8E2D8] lg:-ml-16 z-20 relative shadow-xl">
+            <span className="font-display text-[80px] lg:text-[100px] font-extralight text-[#C8922A] opacity-40 leading-none block mb-4">IV</span>
+            <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#9A8A70] block mb-4">
+              THE GATHERING
+            </span>
+            <h2 className="font-display text-4xl lg:text-[48px] font-light text-[#1A1A1A] leading-[1.1] mb-6">
+              When the Village Comes Alive
+            </h2>
+            <p className="font-sans text-[15px] leading-[1.85] text-[#6B6560]">
+              Every year, Lohagaal holds its mela. Pilgrims arrive. Old families reunite. Children who left for cities return. And at every household — the smell is the same: mustard oil heating, whole spices crackling, jars being filled for relatives to carry back. The achaar is not just food. It is the parting gift. The taste of home in a sealed jar.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CHAPTER V */}
+      <section className="w-full bg-[#1A1A1A] marwadi-texture-dark relative py-24 lg:py-32 overflow-hidden border-b border-[#E8E2D8]/10">
+        
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10 text-center">
+          <span className="font-display text-[80px] lg:text-[100px] font-extralight text-[#C8922A] opacity-40 leading-none block mb-6">V</span>
+          <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#9A8A70] block mb-6">
+            THE CRAFT
+          </span>
+          <h2 className="font-display text-4xl lg:text-[56px] font-light text-[#FFFFFF] leading-[1.1] mb-8">
+            85 Recipes. Written Nowhere.
+          </h2>
+          <p className="font-sans text-[15px] leading-[1.85] text-[#D1CEC7] max-w-2xl mx-auto mb-16 text-left sm:text-center">
+            In our factory in Lohagaal, 85 different varieties of achaar are made. No printed recipe book exists. The ratios — how much rai, how long in the sun, which oil for which fruit — live only in memory. Passed from grandmother to daughter to granddaughter. Ker. Sangri. Gunda. Lesua. These are not exotic ingredients to us. They are childhood.
           </p>
         </div>
 
-        {/* Narrative / Intro */}
-        <section className="bg-[#FFFFFF] border border-[#E8E2D8] p-8 md:p-12 relative overflow-hidden rounded-xl">
-          <div className="flex flex-col md:flex-row items-start gap-8">
-            <div className="w-12 h-12 border border-[#E8E2D8] bg-[#FAFAF4] flex items-center justify-center text-[#C8922A] shrink-0 rounded-lg">
-              <Sun className="w-6 h-6" />
-            </div>
-            <div className="space-y-4 text-left">
-              <h2 className="font-display font-light text-2xl text-[#1A1A1A]">The Slow Curing Philosophy</h2>
-              <p className="font-sans text-xs sm:text-sm text-[#6B6560] leading-relaxed">
-                Every jar of Achaarwaala is a celebration of time. In an era of chemical ripening and mass machinery, our village kitchen in Lohagaal relies solely on the natural warmth of the Rajasthani sun and the slow infusion of ancestral spices in cold-pressed mustard oil.
-              </p>
-              <p className="font-sans text-xs sm:text-sm text-[#6B6560] leading-relaxed">
-                Our raw mangoes, wild ker, and spicy red chillies are carefully hand-sliced, salted, and spiced by local artisans whose hands carry centuries of regional intelligence. We do not rush the cure. Each batch matures slowly over forty-five days until it reaches absolute spice equilibrium.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Marquee Banner */}
+        <div className="relative z-10 bg-[#111111] border-y border-[#C8922A]/20">
+          <Marquee text="Ker Sangri · Jaal Wali Keri · Gunda · Haldi · Lesua · Nimbu · Hari Mirch · Karonda · Baans · Amla · " />
+        </div>
 
-        {/* Core Values */}
-        <section className="space-y-12">
-          <div className="text-center">
-            <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#9A8A70] block mb-2">
-              OUR ETHOS
-            </span>
-            <h2 className="font-display text-3xl font-light text-[#1A1A1A]">Ancestral Pillars</h2>
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10 text-center mt-16">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 border border-[#C8922A]/30 rounded-full px-8 py-3 bg-[#C8922A]/5">
+            <span className="font-sans text-xs tracking-widest text-[#C8922A] uppercase"><span className="font-bold">85</span> Varieties</span>
+            <span className="hidden sm:block text-[#C8922A]/40">•</span>
+            <span className="font-sans text-xs tracking-widest text-[#C8922A] uppercase"><span className="font-bold">1</span> Village</span>
+            <span className="hidden sm:block text-[#C8922A]/40">•</span>
+            <span className="font-sans text-xs tracking-widest text-[#C8922A] uppercase"><span className="font-bold">0</span> Printed Recipes</span>
           </div>
-          <div className="grid sm:grid-cols-3 gap-6">
-            <div className="bg-[#FFFFFF] p-8 border border-[#E8E2D8] rounded-xl text-left space-y-4">
-              <div className="w-10 h-10 border border-[#E8E2D8] bg-[#FAFAF4] flex items-center justify-center text-[#C8922A] rounded-lg">
-                <Sun className="w-5 h-5" />
-              </div>
-              <h3 className="font-display font-light text-lg text-[#1A1A1A]">100% Sun-Cured</h3>
-              <p className="font-sans text-xs text-[#6B6560] leading-relaxed">
-                Cured entirely under open desert skies in glass jars. We use no artificial heat or pressure.
-              </p>
-            </div>
-            
-            <div className="bg-[#FFFFFF] p-8 border border-[#E8E2D8] rounded-xl text-left space-y-4">
-              <div className="w-10 h-10 border border-[#E8E2D8] bg-[#FAFAF4] flex items-center justify-center text-[#C8922A] rounded-lg">
-                <Heart className="w-5 h-5" />
-              </div>
-              <h3 className="font-display font-light text-lg text-[#1A1A1A]">Zero Additives</h3>
-              <p className="font-sans text-xs text-[#6B6560] leading-relaxed">
-                No chemical preservatives, synthetic dyes, or acidity regulators. Natural salt and mustard oil are our only shields.
-              </p>
-            </div>
+        </div>
+      </section>
 
-            <div className="bg-[#FFFFFF] p-8 border border-[#E8E2D8] rounded-xl text-left space-y-4">
-              <div className="w-10 h-10 border border-[#E8E2D8] bg-[#FAFAF4] flex items-center justify-center text-[#C8922A] rounded-lg">
-                <Award className="w-5 h-5" />
-              </div>
-              <h3 className="font-display font-light text-lg text-[#1A1A1A]">Single-Origin</h3>
-              <p className="font-sans text-xs text-[#6B6560] leading-relaxed">
-                Sourced from family estates in Lohagaal and neighboring village farms to support rural heritage.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Timeline */}
-        <section className="space-y-12 text-left">
-          <div className="text-center">
-            <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#9A8A70] block mb-2">
-              THE CHRONICLE
-            </span>
-            <h2 className="font-display text-3xl font-light text-[#1A1A1A]">Our Slow Journey</h2>
-          </div>
-          <div className="relative border-l border-[#E8E2D8] ml-4 md:ml-32 space-y-12">
-            {milestones.map((m) => (
-              <div key={m.year} className="relative pl-8 md:pl-12 group">
-                {/* Timeline node */}
-                <div className="absolute left-0 top-1.5 w-3.5 h-3.5 bg-[#C8922A] -translate-x-1/2 border border-[#FAFAF4] rounded-full" />
-                
-                {/* Year Label */}
-                <span className="hidden md:block absolute right-full mr-8 text-xl font-display font-light text-[#C8922A] top-0.5">{m.year}</span>
-                
-                <div className="space-y-1.5">
-                  <span className="md:hidden block text-xs font-sans tracking-widest text-[#C8922A]">{m.year}</span>
-                  <h3 className="font-display font-light text-lg text-[#1A1A1A]">{m.title}</h3>
-                  <p className="font-sans text-xs sm:text-sm text-[#6B6560] leading-relaxed">{m.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="bg-[#FFFFFF] border border-[#E8E2D8] p-8 md:p-12 rounded-xl text-center space-y-6">
-          <h2 className="font-display font-light text-2xl md:text-3xl text-[#1A1A1A]">Experience the Heritage</h2>
-          <p className="font-sans text-xs sm:text-sm text-[#6B6560] max-w-2xl mx-auto leading-relaxed">
-            Every jar of our vintage pickles is sealed by hand, numbered, and shipped directly from our estate in Lohagaal. Explore our signature batches to find your perfect pairing.
+      {/* CHAPTER VI */}
+      <section className="w-full bg-transparent marwadi-texture relative py-32 lg:py-48 text-center">
+        <div className="max-w-3xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
+          <span className="font-display text-[80px] lg:text-[100px] font-extralight text-[#C8922A] opacity-40 leading-none block mb-6">VI</span>
+          <span className="font-sans text-[10px] uppercase tracking-[0.15em] text-[#9A8A70] block mb-8">
+            TODAY
+          </span>
+          <h2 className="font-display text-5xl lg:text-[64px] font-light text-[#1A1A1A] leading-[1.1] mb-4">
+            From Lohagaal, To You.
+          </h2>
+          <p className="font-display italic text-2xl text-[#C8922A] mb-10">
+            Same sun. Same soil. Same hands.
           </p>
-          <div>
-            <Link to="/products" className="btn-primary py-3 px-8 text-xs tracking-[0.12em]">
-              BROWSE SIGNATURE SERIES →
-            </Link>
-          </div>
-        </section>
-
-      </div>
+          <p className="font-sans text-[15px] leading-[1.85] text-[#6B6560] mb-16">
+            We didn't change the recipe. We didn't move the factory. We didn't replace the sun with a dehydrator. We only added one thing — a way to reach you. Every jar that leaves Lohagaal carries a thousand years of story. We hope it reaches your table, and stays in your memory.
+          </p>
+          <Link to="/products" className="btn-primary py-4 px-12 text-[13px] tracking-[0.15em] bg-[#1A1A1A] hover:bg-[#C8922A]">
+            SHOP THE COLLECTION
+          </Link>
+        </div>
+      </section>
+      
     </div>
   );
 }

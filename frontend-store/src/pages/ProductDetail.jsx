@@ -215,124 +215,6 @@ export default function ProductDetail() {
 
   // Customization state removed
 
-  const MOCK_PRODUCTS = [
-    {
-      id: 'prod-1',
-      name: 'Heritage Mango Pickle',
-      slug: 'heritage-mango',
-      price: 450,
-      mrp: 550,
-      unit: '500g',
-      weight: 500,
-      sku: 'AW-MNG-01',
-      isFeatured: true,
-      stock: 50,
-      images: [{ id: 'img-1', url: imgBottomRight, isPrimary: true }],
-      category: { name: 'Mango Specialities', slug: 'mango-achaar' },
-      shortDesc: 'Traditional Rajasthani sun-dried Raw Mango Pickle, slow-cured in pure mustard oil and authentic spices.',
-      description: 'Our signature Heritage Mango Pickle (Aam ka Achaar) is prepared using the finest handpicked green mangoes from local orchards. We follow a century-old traditional recipe: sun-dried to perfection, slow-cured in rich mustard oil, and infused with freshly ground fennel, fenugreek, and mustard seeds. 100% natural, preservative-free, and guaranteed to remind you of home.',
-      reviews: [
-        { id: 'rev-1', rating: 5, title: 'Incredible taste!', body: 'Exactly like the one my grandmother used to make in Rajasthan. Perfectly sour and spicy.', user: { name: 'Ramesh Sharma' }, isVerified: true, createdAt: '2026-05-15T12:00:00Z' },
-        { id: 'rev-2', rating: 5, title: 'Superb quality', body: 'Very fresh spice blend and not too oily. Will definitely order again.', user: { name: 'Priya Patel' }, isVerified: true, createdAt: '2026-05-18T12:00:00Z' }
-      ],
-      _count: { reviews: 2 }
-    },
-    {
-      id: 'prod-2',
-      name: 'Rustic Chilli Pickle',
-      slug: 'rustic-chilli',
-      price: 425,
-      mrp: 499,
-      unit: '500g',
-      weight: 500,
-      sku: 'AW-CHL-02',
-      isFeatured: true,
-      stock: 40,
-      images: [{ id: 'img-2', url: imgLeft, isPrimary: true }],
-      category: { name: 'Artisanal Chilli', slug: 'chilli-achaar' },
-      shortDesc: 'Fiery Rajasthani Green Chilli Pickle with a rich smoked spice blend, cured in cold-pressed mustard oil.',
-      description: 'A spicy lover\'s dream! Our Rustic Chilli Pickle is crafted using premium, thick green chillies harvested at peak ripeness. The chillies are slit, stuffed with our secret spice blend of split mustard, dry mango powder, and cumin, and matured slowly under the Rajasthani sun. It brings a perfect kick to any meal.',
-      reviews: [
-        { id: 'rev-3', rating: 5, title: 'Spicy and delicious', body: 'A bit hot but extremely flavorful. Goes wonderfully with parathas.', user: { name: 'Ankit Kumar' }, isVerified: true, createdAt: '2026-05-10T12:00:00Z' }
-      ],
-      _count: { reviews: 1 }
-    },
-    {
-      id: 'prod-3',
-      name: 'Ker Sangri Achaar',
-      slug: 'ker-sangri',
-      price: 599,
-      mrp: 699,
-      unit: '400g',
-      weight: 400,
-      sku: 'AW-KER-03',
-      isFeatured: true,
-      stock: 25,
-      images: [{ id: 'img-3', url: imgTopRight, isPrimary: true }],
-      category: { name: 'Desert Delicacies', slug: 'desert-achaar' },
-      shortDesc: 'Authentic Marwari royal delicacy featuring wild-harvested desert Ker and Sangri beans.',
-      description: 'Ker Sangri is the crown jewel of Rajasthani cuisine. Made from wild-harvested dried desert beans (Sangri) and desert berries (Ker), this pickle is cooked with dried red chillies, raisins, and traditional spices. Prepared in small artisanal batches to maintain its rich heritage flavor.',
-      reviews: [
-        { id: 'rev-4', rating: 5, title: 'Royal taste indeed', body: 'I could not find this quality anywhere else online. Worth every rupee.', user: { name: 'Sanjay Singh' }, isVerified: true, createdAt: '2026-05-20T12:00:00Z' }
-      ],
-      _count: { reviews: 1 }
-    },
-    {
-      id: 'prod-4',
-      name: 'Ancestral Lemon Pickle',
-      slug: 'ancestral-lemon',
-      price: 399,
-      mrp: 450,
-      unit: '500g',
-      weight: 500,
-      sku: 'AW-LMN-04',
-      isFeatured: false,
-      stock: 35,
-      images: [{ id: 'img-4', url: imgBottomRight, isPrimary: true }],
-      category: { name: 'Heritage Blends', slug: 'heritage-blends' },
-      shortDesc: 'Oil-free tangy Lemon Pickle, naturally fermented and cured with black salt and carom seeds.',
-      description: 'An oil-free, healthy digestive pickle made using juicy, thin-skinned lemons. The lemons are cured with black salt, rock salt, carom seeds (ajwain), and black pepper. It is naturally aged over months until the lemon skins become tender and develop a rich, dark sweet-and-sour glaze.',
-      reviews: [],
-      _count: { reviews: 0 }
-    },
-    {
-      id: 'prod-5',
-      name: 'Spicy Garlic Pickle',
-      slug: 'spicy-garlic',
-      price: 480,
-      mrp: 520,
-      unit: '400g',
-      weight: 400,
-      sku: 'AW-GRL-05',
-      isFeatured: true,
-      stock: 15,
-      images: [{ id: 'img-5', url: imgLeft, isPrimary: true }],
-      category: { name: 'Heritage Blends', slug: 'heritage-blends' },
-      shortDesc: 'Pungent and spicy whole Garlic clove pickle, seasoned with split mustard and fenugreek seeds.',
-      description: 'Whole peeled garlic cloves slow-cooked in mustard oil with high-grade split red chillies, mustard, and fennel. This pickle is rich, pungent, and makes an excellent immunity booster besides being highly delicious.',
-      reviews: [],
-      _count: { reviews: 0 }
-    },
-    {
-      id: 'prod-6',
-      name: 'Dry Mango (Amchur) Special',
-      slug: 'dry-mango-amchur',
-      price: 350,
-      mrp: 399,
-      unit: '250g',
-      weight: 250,
-      sku: 'AW-AMC-06',
-      isFeatured: false,
-      stock: 60,
-      images: [{ id: 'img-6', url: imgTopRight, isPrimary: true }],
-      category: { name: 'Mango Specialities', slug: 'mango-achaar' },
-      shortDesc: 'Sun-dried sour mango slices seasoned with local Rajasthani spices, oil-free.',
-      description: 'Made from premium dried green mango slices (Amchur), this oil-free dry pickle is coated in black salt, cumin, and red chilli. Perfect companion for travels and lightweight meals.',
-      reviews: [],
-      _count: { reviews: 0 }
-    }
-  ];
-
   const fetchProduct = useCallback(async () => {
     setLoading(true);
     try {
@@ -348,15 +230,8 @@ export default function ProductDetail() {
           });
       }
     } catch {
-      const mockProd = MOCK_PRODUCTS.find(p => p.slug === slug);
-      if (mockProd) {
-        setProduct(mockProd);
-        const mockRelated = MOCK_PRODUCTS.filter(p => p.category?.slug === mockProd.category?.slug && p.id !== mockProd.id).slice(0, 4);
-        setRelated(mockRelated);
-      } else {
-        toast.error('Product not found');
-        navigate('/products');
-      }
+      toast.error('Product not found');
+      navigate('/products');
     } finally { setLoading(false); }
    }, [slug, navigate]);
 

@@ -352,3 +352,76 @@ hr {
 .animate-slide-down {
   animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Marwadi/Rajasthani Background Textures */
+.marwadi-texture {
+  position: relative;
+  z-index: 1;
+}
+
+.marwadi-texture::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' aria-hidden='true'%3E%3Cstyle%3Etext%7Bfont-family:'Hind', 'Noto Sans Devanagari', sans-serif;font-weight:400;fill:%238A6A40;opacity:0.055;letter-spacing:0.05em;%7D%3C/style%3E%3Ctext x='40' y='80' transform='rotate(-12, 40, 80)' font-size='22'%3Eखम्मा घणी%3C/text%3E%3Ctext x='300' y='150' transform='rotate(8, 300, 150)' font-size='16'%3Eधरती धोरां री%3C/text%3E%3Ctext x='550' y='60' transform='rotate(-5, 550, 60)' font-size='20'%3Eहाथ रो बणायो%3C/text%3E%3Ctext x='100' y='280' transform='rotate(15, 100, 280)' font-size='28'%3Eअसली स्वाद%3C/text%3E%3Ctext x='420' y='320' transform='rotate(-18, 420, 320)' font-size='14'%3Eगांव री खुशबू%3C/text%3E%3Ctext x='650' y='250' transform='rotate(10, 650, 250)' font-size='18'%3Eपीढ़ी दर पीढ़ी%3C/text%3E%3Ctext x='200' y='450' transform='rotate(-8, 200, 450)' font-size='24'%3Eधूप में पकायो%3C/text%3E%3Ctext x='500' y='500' transform='rotate(6, 500, 500)' font-size='16'%3Eम्हारो राजस्थान%3C/text%3E%3Ctext x='720' y='420' transform='rotate(-14, 720, 420)' font-size='30'%3Eलोहागल%3C/text%3E%3Ctext x='50' y='550' transform='rotate(12, 50, 550)' font-size='15'%3Eराजस्थानी जायको%3C/text%3E%3C/svg%3E");
+  background-size: 800px 600px;
+  background-repeat: repeat;
+  background-attachment: scroll;
+}
+
+@media (min-width: 768px) {
+  .marwadi-texture::before {
+    background-attachment: fixed;
+  }
+}
+
+.marwadi-texture-story {
+  position: relative;
+  z-index: 1;
+}
+
+.marwadi-texture-story::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' aria-hidden='true'%3E%3Cstyle%3Etext%7Bfont-family:'Hind', 'Noto Sans Devanagari', sans-serif;font-weight:400;fill:%238A6A40;opacity:0.08;letter-spacing:0.05em;%7D%3C/style%3E%3Ctext x='550' y='60' transform='rotate(-5, 550, 60)' font-size='20'%3Eहाथ रो बणायो%3C/text%3E%3Ctext x='200' y='450' transform='rotate(-8, 200, 450)' font-size='24'%3Eधूप में पकायो%3C/text%3E%3C/svg%3E");
+  background-size: 800px 600px;
+  background-repeat: repeat;
+  background-attachment: scroll;
+}
+
+@media (min-width: 768px) {
+  .marwadi-texture-story::before {
+    background-attachment: fixed;
+  }
+}
+
+.marwadi-texture-dark {
+  position: relative;
+  z-index: 1;
+}
+
+.marwadi-texture-dark::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' aria-hidden='true'%3E%3Cstyle%3Etext%7Bfont-family:'Hind', 'Noto Sans Devanagari', sans-serif;font-weight:400;fill:%23C8922A;opacity:0.06;letter-spacing:0.05em;%7D%3C/style%3E%3Ctext x='40' y='80' transform='rotate(-12, 40, 80)' font-size='22'%3Eखम्मा घणी%3C/text%3E%3Ctext x='300' y='150' transform='rotate(8, 300, 150)' font-size='16'%3Eधरती धोरां री%3C/text%3E%3Ctext x='550' y='60' transform='rotate(-5, 550, 60)' font-size='20'%3Eहाथ रो बणायो%3C/text%3E%3Ctext x='100' y='280' transform='rotate(15, 100, 280)' font-size='28'%3Eअसली स्वाद%3C/text%3E%3Ctext x='420' y='320' transform='rotate(-18, 420, 320)' font-size='14'%3Eगांव री खुशबू%3C/text%3E%3Ctext x='650' y='250' transform='rotate(10, 650, 250)' font-size='18'%3Eपीढ़ी दर पीढ़ी%3C/text%3E%3Ctext x='200' y='450' transform='rotate(-8, 200, 450)' font-size='24'%3Eधूप में पकायो%3C/text%3E%3Ctext x='500' y='500' transform='rotate(6, 500, 500)' font-size='16'%3Eम्हारो राजस्थान%3C/text%3E%3Ctext x='720' y='420' transform='rotate(-14, 720, 420)' font-size='30'%3Eलोहागल%3C/text%3E%3Ctext x='50' y='550' transform='rotate(12, 50, 550)' font-size='15'%3Eराजस्थानी जायको%3C/text%3E%3C/svg%3E");
+  background-size: 800px 600px;
+  background-repeat: repeat;
+  background-attachment: scroll;
+}
+
+@media (min-width: 768px) {
+  .marwadi-texture-dark::before {
+    background-attachment: fixed;
+  }
+}

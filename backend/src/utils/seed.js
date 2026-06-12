@@ -17,18 +17,22 @@ const categories = [
   { name: 'Murabba (Preserves)', slug: 'murabba', description: 'Sweet and nutritious fruit preserves including Amla and Apple Murabba' },
   { name: 'Other Products', slug: 'others', description: 'Earthy local essentials like Gulkand, Kachi Ghani Oil, and traditional Papad' }
 ];
+import bcrypt from 'bcryptjs';
 
 async function main() {
   console.log('🌶️ Seeding database with actual AchaarWaala Pickles...');
 
+  const hashedPassword = await bcrypt.hash('admin123', 10);
+
   // Create admin user
   const admin = await prisma.user.upsert({
     where: { email: 'admin@achaarwaala.com' },
-    update: {},
+    update: { password: hashedPassword },
     create: {
       name: 'Admin',
       email: 'admin@achaarwaala.com',
       phone: '9999999999',
+      password: hashedPassword,
       role: 'SUPER_ADMIN',
     },
   });
@@ -61,129 +65,129 @@ async function main() {
 
   // Create products (actual achaar varieties)
   const products = [
-    { 
-      name: 'Desi Keri Lohagal Achaar', 
-      slug: 'desi-keri-lohagal-achaar', 
-      categorySlug: 'raw-mango', 
-      price: 400, 
-      mrp: 499, 
-      stock: 100, 
-      unit: '500g', 
-      isFeatured: true, 
-      tags: ['mango', 'keri', 'traditional', 'best-seller'] 
+    {
+      name: 'Desi Keri Lohagal Achaar',
+      slug: 'desi-keri-lohagal-achaar',
+      categorySlug: 'raw-mango',
+      price: 400,
+      mrp: 499,
+      stock: 100,
+      unit: '500g',
+      isFeatured: true,
+      tags: ['mango', 'keri', 'traditional', 'best-seller']
     },
-    { 
-      name: 'Ker Sangri Special Rajasthani Achaar', 
-      slug: 'ker-sangri-special-rajasthani-achaar', 
-      categorySlug: 'rajasthani-special', 
-      price: 400, 
-      mrp: 550, 
-      stock: 50, 
-      unit: '500g', 
-      isFeatured: true, 
-      tags: ['rajasthani', 'ker', 'sangri', 'royal'] 
+    {
+      name: 'Ker Sangri Special Rajasthani Achaar',
+      slug: 'ker-sangri-special-rajasthani-achaar',
+      categorySlug: 'rajasthani-special',
+      price: 400,
+      mrp: 550,
+      stock: 50,
+      unit: '500g',
+      isFeatured: true,
+      tags: ['rajasthani', 'ker', 'sangri', 'royal']
     },
-    { 
-      name: 'Athana Hari Mirch (Green Chilli) Achaar', 
-      slug: 'athana-hari-mirch-green-chilli-achaar', 
-      categorySlug: 'green-chilli', 
-      price: 400, 
-      mrp: 499, 
-      stock: 120, 
-      unit: '500g', 
-      isFeatured: true, 
-      tags: ['chilli', 'green-chilli', 'athana', 'spicy'] 
+    {
+      name: 'Athana Hari Mirch (Green Chilli) Achaar',
+      slug: 'athana-hari-mirch-green-chilli-achaar',
+      categorySlug: 'green-chilli',
+      price: 400,
+      mrp: 499,
+      stock: 120,
+      unit: '500g',
+      isFeatured: true,
+      tags: ['chilli', 'green-chilli', 'athana', 'spicy']
     },
-    { 
-      name: 'Desi Lahsun (Garlic) Achaar', 
-      slug: 'desi-lahsun-garlic-achaar', 
-      categorySlug: 'garlic', 
-      price: 400, 
-      mrp: 499, 
-      stock: 90, 
-      unit: '500g', 
-      tags: ['garlic', 'lahsun', 'spicy'] 
+    {
+      name: 'Desi Lahsun (Garlic) Achaar',
+      slug: 'desi-lahsun-garlic-achaar',
+      categorySlug: 'garlic',
+      price: 400,
+      mrp: 499,
+      stock: 90,
+      unit: '500g',
+      tags: ['garlic', 'lahsun', 'spicy']
     },
-    { 
-      name: 'Nimbu Begar Tel (Oil-free Lemon) Achaar', 
-      slug: 'nimbu-begar-tel-oil-free-lemon-achaar', 
-      categorySlug: 'lemon', 
-      price: 400, 
-      mrp: 499, 
-      stock: 110, 
-      unit: '500g', 
-      tags: ['lemon', 'nimbu', 'oil-free', 'digestive'] 
+    {
+      name: 'Nimbu Begar Tel (Oil-free Lemon) Achaar',
+      slug: 'nimbu-begar-tel-oil-free-lemon-achaar',
+      categorySlug: 'lemon',
+      price: 400,
+      mrp: 499,
+      stock: 110,
+      unit: '500g',
+      tags: ['lemon', 'nimbu', 'oil-free', 'digestive']
     },
-    { 
-      name: 'Lal Mirch Bharwa (Stuffed Red Chilli) Achaar', 
-      slug: 'lal-mirch-bharwa-stuffed-red-chilli-achaar', 
-      categorySlug: 'red-chilli', 
-      price: 400, 
-      mrp: 520, 
-      stock: 75, 
-      unit: '500g', 
-      isFeatured: true, 
-      tags: ['chilli', 'red-chilli', 'stuffed', 'fiery'] 
+    {
+      name: 'Lal Mirch Bharwa (Stuffed Red Chilli) Achaar',
+      slug: 'lal-mirch-bharwa-stuffed-red-chilli-achaar',
+      categorySlug: 'red-chilli',
+      price: 400,
+      mrp: 520,
+      stock: 75,
+      unit: '500g',
+      isFeatured: true,
+      tags: ['chilli', 'red-chilli', 'stuffed', 'fiery']
     },
-    { 
-      name: 'Lesua / Gunda (Gum Berry) Achaar', 
-      slug: 'lesua-gunda-gum-berry-achaar', 
-      categorySlug: 'rajasthani-special', 
-      price: 400, 
-      mrp: 499, 
-      stock: 60, 
-      unit: '500g', 
-      tags: ['gunda', 'lesua', 'berry', 'rajasthani'] 
+    {
+      name: 'Lesua / Gunda (Gum Berry) Achaar',
+      slug: 'lesua-gunda-gum-berry-achaar',
+      categorySlug: 'rajasthani-special',
+      price: 400,
+      mrp: 499,
+      stock: 60,
+      unit: '500g',
+      tags: ['gunda', 'lesua', 'berry', 'rajasthani']
     },
-    { 
-      name: 'Ker 0-size Premium Achaar', 
-      slug: 'ker-0-size-premium-achaar', 
-      categorySlug: 'ker', 
-      price: 450, 
-      mrp: 600, 
-      stock: 40, 
-      unit: '500g', 
-      tags: ['ker', 'premium', 'berry'] 
+    {
+      name: 'Ker 0-size Premium Achaar',
+      slug: 'ker-0-size-premium-achaar',
+      categorySlug: 'ker',
+      price: 450,
+      mrp: 600,
+      stock: 40,
+      unit: '500g',
+      tags: ['ker', 'premium', 'berry']
     },
-    { 
-      name: 'Kachi Haldi (Fresh Turmeric) Achaar', 
-      slug: 'kachi-haldi-fresh-turmeric-achaar', 
-      categorySlug: 'vegetables', 
-      price: 400, 
-      mrp: 499, 
-      stock: 80, 
-      unit: '500g', 
-      tags: ['turmeric', 'haldi', 'healthy', 'immunity'] 
+    {
+      name: 'Kachi Haldi (Fresh Turmeric) Achaar',
+      slug: 'kachi-haldi-fresh-turmeric-achaar',
+      categorySlug: 'vegetables',
+      price: 400,
+      mrp: 499,
+      stock: 80,
+      unit: '500g',
+      tags: ['turmeric', 'haldi', 'healthy', 'immunity']
     },
-    { 
-      name: 'Amla Murabba (Sweet Gooseberry)', 
-      slug: 'amla-murabba-sweet-gooseberry', 
-      categorySlug: 'murabba', 
-      price: 400, 
-      mrp: 499, 
-      stock: 130, 
-      unit: '500g', 
-      tags: ['amla', 'murabba', 'sweet', 'gooseberry'] 
+    {
+      name: 'Amla Murabba (Sweet Gooseberry)',
+      slug: 'amla-murabba-sweet-gooseberry',
+      categorySlug: 'murabba',
+      price: 400,
+      mrp: 499,
+      stock: 130,
+      unit: '500g',
+      tags: ['amla', 'murabba', 'sweet', 'gooseberry']
     },
-    { 
-      name: 'Gulkand (Sun-cooked Rose Petals)', 
-      slug: 'gulkand-sun-cooked-rose-petals', 
-      categorySlug: 'others', 
-      price: 350, 
-      mrp: 450, 
-      stock: 140, 
-      unit: '500g', 
-      tags: ['gulkand', 'rose', 'sweet', 'ayurvedic'] 
+    {
+      name: 'Gulkand (Sun-cooked Rose Petals)',
+      slug: 'gulkand-sun-cooked-rose-petals',
+      categorySlug: 'others',
+      price: 350,
+      mrp: 450,
+      stock: 140,
+      unit: '500g',
+      tags: ['gulkand', 'rose', 'sweet', 'ayurvedic']
     },
-    { 
-      name: 'Desi Chana Methi Achaar', 
-      slug: 'desi-chana-methi-achaar', 
-      categorySlug: 'vegetables', 
-      price: 400, 
-      mrp: 480, 
-      stock: 95, 
-      unit: '500g', 
-      tags: ['chana', 'methi', 'mango', 'protein'] 
+    {
+      name: 'Desi Chana Methi Achaar',
+      slug: 'desi-chana-methi-achaar',
+      categorySlug: 'vegetables',
+      price: 400,
+      mrp: 480,
+      stock: 95,
+      unit: '500g',
+      tags: ['chana', 'methi', 'mango', 'protein']
     }
   ];
 

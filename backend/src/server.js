@@ -28,7 +28,9 @@ const HOST = process.env.HOST || '0.0.0.0';
 async function main() {
   try {
     await prisma.$connect();
-    console.log('✅ PostgreSQL connected (via Prisma singleton)');
+    // Force an actual query to verify credentials
+    await prisma.$queryRaw`SELECT 1`;
+    console.log('✅ PostgreSQL connected and verified (Database is responding)');
   } catch (err) {
     console.error('❌ Database connection failed:', err.message);
     process.exit(1);

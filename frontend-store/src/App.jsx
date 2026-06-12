@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { initMetaPixel, trackPageView } from './utils/metaPixel';
+import logoImg from './assets/images/logo_black.svg';
 
 import { useAuthStore, useCartStore } from './store';
 import Layout from './components/Layout';
@@ -49,7 +50,7 @@ function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#FAFAF4]">
       <div className="flex flex-col items-center gap-2">
-        <span className="font-sans text-sm font-bold tracking-[0.25em] text-[#1A1A1A] animate-pulse">ACHAARWAALA</span>
+        <img src={logoImg} alt="Loading..." className="h-12 w-auto object-contain mix-blend-multiply animate-pulse" />
       </div>
     </div>
   );

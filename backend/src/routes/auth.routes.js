@@ -9,6 +9,7 @@ const router = express.Router();
 router.post('/verify-firebase', authRateLimiter, authController.verifyFirebase);
 
 // Standard auth routes
+router.post('/login',         authRateLimiter, authController.emailLogin);
 router.post('/logout',        authenticate,    authController.logout);
 router.post('/refresh',                        authController.refresh);
 router.get('/me',             authenticate,    authController.getMe);

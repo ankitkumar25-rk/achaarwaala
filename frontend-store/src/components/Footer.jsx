@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
+import logoImg from '../assets/images/logo_black.svg';
 
 export default function Footer() {
   return (
@@ -10,9 +11,7 @@ export default function Footer() {
           {/* Brand Info Column */}
           <div className="lg:col-span-2 space-y-5">
             <Link to="/" className="flex items-center gap-3">
-              <span className="font-sans text-sm font-bold tracking-[0.25em] text-[#1A1A1A]">
-                ACHAARWAALA
-              </span>
+              <img src={logoImg} alt="Achaarwaala Logo" className="h-10 w-auto object-contain mix-blend-multiply" />
             </Link>
             <p className="text-[#6B6560] text-sm leading-relaxed max-w-sm">
               Artisanal Indian pickles crafted with patience. Preserving traditional, sun-cured family recipes from Lohagaal, Rajasthan. Slow-made, small-batch, precious.

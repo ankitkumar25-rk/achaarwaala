@@ -4,7 +4,7 @@ import { Loader, X } from 'lucide-react';
 import { useAuthStore } from '../store';
 import { auth } from '../lib/firebase';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
-import logoImg from '../assets/images/logo.png';
+import logoImg from '../assets/images/logo_black.svg';
 
 export default function AuthModal() {
   const { isAuthModalOpen, closeAuthModal, verifyFirebase } = useAuthStore();

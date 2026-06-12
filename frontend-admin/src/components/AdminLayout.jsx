@@ -7,7 +7,7 @@ import {
   RotateCcw, BarChart3, MessageSquare, LogOut, Menu, X, ClipboardList,
   Settings, Printer, ExternalLink, User
 } from 'lucide-react';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo_black.svg';
 import { NotificationBell } from './NotificationBell';
 import { useAdminSSE } from '../hooks/useAdminSSE';
 import toast from 'react-hot-toast';

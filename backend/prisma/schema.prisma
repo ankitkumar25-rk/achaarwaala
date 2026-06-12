@@ -75,6 +75,7 @@ model User {
   email           String?   @unique
   name            String?
   role            Role      @default(CUSTOMER)
+  password        String?
   avatarUrl       String?
   isBanned        Boolean   @default(false)
   createdAt       DateTime  @default(now())

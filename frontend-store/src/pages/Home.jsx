@@ -14,10 +14,10 @@ import imgBottomRight from '../assets/images/b085284f-af0d-4da2-8ead-aa66bd3075e
 // ── Hero Section ─────────────────────────────────────────────
 function HeroSection() {
   return (
-    <section className="w-full bg-[#FAFAF4] py-16 lg:py-28 px-6 sm:px-10 lg:px-16 flex items-center min-h-[580px] border-b border-[#E8E2D8]">
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        {/* Left Column: 55% width */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left max-w-xl">
+    <section className="w-full bg-transparent py-16 lg:py-28 px-6 sm:px-10 lg:px-16 flex items-center min-h-[580px] border-b border-[#E8E2D8] marwadi-texture">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
+        {/* Left Column: Text */}
+        <div className="lg:col-span-6 flex flex-col items-start text-left max-w-xl">
           <span className="font-sans text-[10px] uppercase tracking-[0.14em] text-[#B53728] mb-4">
             HANDCRAFTED IN LOHAGAAL · EST. 1946
           </span>
@@ -44,21 +44,40 @@ function HeroSection() {
           </div>
         </div>
 
-        {/* Right Column: 45% width */}
-        <div className="lg:col-span-5 w-full flex justify-center lg:justify-end">
-          <div className="w-full max-w-[450px] relative rounded-xl overflow-hidden border border-[#E8E2D8] aspect-[4/5] sm:aspect-[4/3] lg:aspect-[4/5]">
-            <img
-              src={imgBottomRight}
-              alt="Artisanal pickle jar in golden kitchen light"
-              className="w-full h-full object-cover"
-            />
-            {/* Overlay Quote Card */}
-            <div className="absolute bottom-4 left-4 bg-[#FFFFFF] border border-[#E8E2D8] p-4 max-w-[240px] rounded-lg text-left shadow-xs">
-              <span className="font-sans text-[9px] uppercase tracking-wider text-[#9A8A70] block mb-1">Curated Batch</span>
-              <p className="font-display italic text-[11.5px] text-[#1A1A1A] leading-relaxed">
-                "A symphony of heat and sun, perfected over seventy summers."
-              </p>
+        {/* Right Column: Gallery Wall Collage */}
+        <div className="lg:col-span-6 w-full hidden lg:flex justify-end items-center">
+          <div className="relative w-full max-w-[500px] h-[520px]">
+
+            {/* Frame 1 — large portrait, top-left, tilt left */}
+            <div className="absolute top-0 left-0 w-[47%] bg-white p-[7px] border border-[#E8E2D8] shadow-[0_6px_24px_rgba(0,0,0,0.13)]"
+              style={{ transform: 'rotate(-4deg)', zIndex: 2, aspectRatio: '4/5' }}>
+              <img src="/images/categories/jaali-wali-kairi.jpg" alt="Jaali Wali Kairi" className="w-full h-full object-cover" />
             </div>
+
+            {/* Frame 2 — small square, top-right, tilt right */}
+            <div className="absolute top-0 right-4 w-[34%] bg-white p-[7px] border border-[#E8E2D8] shadow-[0_6px_24px_rgba(0,0,0,0.13)]"
+              style={{ transform: 'rotate(3.5deg)', zIndex: 3, aspectRatio: '1/1' }}>
+              <img src="/images/categories/nimbu.jpg" alt="Nimbu" className="w-full h-full object-cover" />
+            </div>
+
+            {/* Frame 3 — medium portrait, center, slight tilt — hero frame */}
+            <div className="absolute top-[22%] left-[24%] w-[44%] bg-white p-[7px] border border-[#E8E2D8] shadow-[0_10px_40px_rgba(0,0,0,0.20)]"
+              style={{ transform: 'rotate(-1.5deg)', zIndex: 5, aspectRatio: '3/4' }}>
+              <img src="/images/categories/desi-mirch.jpg" alt="Desi Mirch" className="w-full h-full object-cover" />
+            </div>
+
+            {/* Frame 4 — small square, bottom-left, tilt right */}
+            <div className="absolute bottom-8 left-2 w-[33%] bg-white p-[7px] border border-[#E8E2D8] shadow-[0_6px_24px_rgba(0,0,0,0.13)]"
+              style={{ transform: 'rotate(3deg)', zIndex: 3, aspectRatio: '1/1' }}>
+              <img src="/images/categories/awla.jpg" alt="Awla" className="w-full h-full object-cover" />
+            </div>
+
+            {/* Frame 5 — medium portrait, bottom-right, slight tilt */}
+            <div className="absolute bottom-2 right-2 w-[40%] bg-white p-[7px] border border-[#E8E2D8] shadow-[0_6px_24px_rgba(0,0,0,0.13)]"
+              style={{ transform: 'rotate(-2.5deg)', zIndex: 2, aspectRatio: '4/5' }}>
+              <img src="/images/categories/sangri.jpg" alt="Sangri" className="w-full h-full object-cover" />
+            </div>
+
           </div>
         </div>
       </div>
@@ -108,8 +127,8 @@ function SignatureSeriesSection({ products }) {
 // ── Spirit / Story Section ───────────────────────────────────
 function SpiritSection() {
   return (
-    <section className="py-20 lg:py-28 px-6 sm:px-10 lg:px-16 bg-[#FAFAF4] border-b border-[#E8E2D8]">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+    <section className="py-20 lg:py-28 px-6 sm:px-10 lg:px-16 bg-[#FAFAF4] border-b border-[#E8E2D8] marwadi-texture-story">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch relative z-10">
         {/* Left Column: 45% */}
         <div className="lg:col-span-5 rounded-xl overflow-hidden border border-[#E8E2D8] aspect-[4/5] lg:aspect-auto relative">
           <img
@@ -271,8 +290,8 @@ function RareBatchesSection({ handleAddToCart }) {
 // ── Newsletter Section ───────────────────────────────────────
 function JoinTableSection() {
   return (
-    <section className="bg-[#FAFAF4] py-20 px-6 sm:px-10 lg:px-16 border border-[#E8E2D8] m-6 sm:m-10 lg:m-16 rounded-xl text-center">
-      <div className="max-w-xl mx-auto space-y-6">
+    <section className="bg-[#FAFAF4] py-20 px-6 sm:px-10 lg:px-16 border border-[#E8E2D8] m-6 sm:m-10 lg:m-16 rounded-xl text-center marwadi-texture overflow-hidden">
+      <div className="max-w-xl mx-auto space-y-6 relative z-10">
         {/* Decorative 4-pointed star icon */}
         <div className="text-[#C8922A] flex justify-center">
           <svg className="w-8 h-8 opacity-80" viewBox="0 0 24 24" fill="currentColor">
@@ -317,46 +336,7 @@ export default function Home() {
     staleTime: 1000 * 60 * 10,
   });
 
-  const MOCK_PRODUCTS = [
-    {
-      id: 'prod-1',
-      name: 'Heritage Mango Pickle',
-      slug: 'heritage-mango',
-      price: 450,
-      mrp: 550,
-      unit: '500g',
-      isFeatured: true,
-      stock: 50,
-      images: [{ url: imgBottomRight, isPrimary: true }],
-      category: { name: 'Mango Specialities' }
-    },
-    {
-      id: 'prod-2',
-      name: 'Rustic Chilli Pickle',
-      slug: 'rustic-chilli',
-      price: 425,
-      mrp: 499,
-      unit: '500g',
-      isFeatured: true,
-      stock: 40,
-      images: [{ url: imgLeft, isPrimary: true }],
-      category: { name: 'Artisanal Chilli' }
-    },
-    {
-      id: 'prod-3',
-      name: 'Ker Sangri Achaar',
-      slug: 'ker-sangri',
-      price: 599,
-      mrp: 699,
-      unit: '400g',
-      isFeatured: true,
-      stock: 25,
-      images: [{ url: imgTopRight, isPrimary: true }],
-      category: { name: 'Desert Delicacies' }
-    }
-  ];
-
-  const featuredProducts = (featuredData && featuredData.length >= 3) ? featuredData : MOCK_PRODUCTS;
+  const featuredProducts = (featuredData && featuredData.length >= 3) ? featuredData : (featuredData || []);
 
   const handleAddToCart = (product) => {
     addToCart(product, 1);

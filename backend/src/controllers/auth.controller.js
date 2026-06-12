@@ -4,6 +4,7 @@ import { createError } from '../middleware/errorHandler.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
+import bcrypt from 'bcryptjs';
 
 if (process.env.FIREBASE_PROJECT_ID && !getApps().length) {
   initializeApp({
@@ -84,6 +85,38 @@ export const verifyFirebase = asyncHandler(async (req, res) => {
         email: email || user.email,
       }
     });
+  }
+
+  const { accessToken, refreshToken } = await issueTokens(user);
+
+  res.cookie('access_token', accessToken, COOKIE_OPTS);
+  res.cookie('refresh_token', refreshToken, REFRESH_COOKIE_OPTS);
+
+  res.json({
+    success: true,
+    data: { 
+      user: { id: user.id, name: user.name, phone: user.phone, email: user.email, role: user.role },
+      accessToken,
+      refreshToken
+    },
+  });
+});
+
+export const emailLogin = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  
+  if (!email || !password) {
+    throw createError('Email and password are required', 400);
+  }
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user || !user.password) {
+    throw createError('Invalid credentials', 401);
+  }
+
+  const isValid = await bcrypt.compare(password, user.password);
+  if (!isValid) {
+    throw createError('Invalid credentials', 401);
   }
 
   const { accessToken, refreshToken } = await issueTokens(user);
